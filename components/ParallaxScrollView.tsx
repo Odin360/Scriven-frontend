@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -10,6 +10,8 @@ import Animated, {
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Colors } from '@/constants/Colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const HEADER_HEIGHT = 250;
 
@@ -45,12 +47,15 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <ThemedView style={styles.container}>
+    <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
+    <LinearGradient colors={["#F350F0","#7CF2FF"]} style={styles.container}>
+      
       <Animated.ScrollView
         ref={scrollRef}
+        showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
-        contentContainerStyle={{ paddingBottom: bottom }}>
+        contentContainerStyle={{}}>
         <Animated.View
           style={[
             styles.header,
@@ -59,24 +64,28 @@ export default function ParallaxScrollView({
           ]}>
           {headerImage}
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+          <View   style={styles.content}>
+          {children}
+          </View>
       </Animated.ScrollView>
-    </ThemedView>
+
+    </LinearGradient>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:"red"
   },
   header: {
     height: HEADER_HEIGHT,
     overflow: 'hidden',
   },
   content: {
+    backgroundColor:"transparent",
     flex: 1,
-    padding: 32,
-    gap: 16,
     overflow: 'hidden',
   },
 });
