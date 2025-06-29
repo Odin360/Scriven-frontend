@@ -34,7 +34,7 @@ const chatScreen = () => {
 if(channel){
     console.log(channel)
     setThread(message)
-    router.push("/Protected/threadScreen")
+    router.push("/(protected)/(otherScreens)/threadScreen")
 }
         }}/>
         <MessageInput/>

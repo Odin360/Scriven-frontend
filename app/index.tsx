@@ -1,8 +1,7 @@
-/*
 import { View, Text,Dimensions, Button } from 'react-native'
 import {useEventListener} from 'expo'
 import React, { useCallback, useRef } from 'react'
-import { router, Stack } from 'expo-router'
+import { Redirect, router, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import {useVideoPlayer, VideoView} from 'expo-video'
 import { useAuthStore } from '@/store/useAuthStore'
@@ -28,15 +27,18 @@ const signedIn = useAuthStore((state)=>state.signedIn)
   console.log("player status changed:",status)
   if(status==="idle"){
     if(signedIn){
-      router.replace("/Protected/(tabs)")
+      router.replace("/(protected)/(tabs)")
     }
     else{
-      router.replace("/Protected/(tabs)")
+      router.replace("/(auth)/signIn")
     }
   }
  })
   return (
-  <><StatusBar hidden={true}/>
+  <>
+  <Redirect href={"/(auth)/signIn"}/>
+  <StatusBar hidden={true}/>
+  
   <Stack.Screen options={{headerShown:false}}/>
     <View style={{flex:1,backgroundColor:'white'}}>
       <VideoView player={player} contentFit="cover" nativeControls={false} style={{height:height,width:width,position:'absolute'
@@ -45,11 +47,4 @@ const signedIn = useAuthStore((state)=>state.signedIn)
     </>
   )
 }
-*/
-import React from 'react';
-import JoinTeamScreen from './Protected/(OtherScreens)/JoinTeamScreen';
-const SplashScreen =() =>{
-return <JoinTeamScreen />;
-}
-
 export default SplashScreen

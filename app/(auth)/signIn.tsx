@@ -60,7 +60,7 @@ const SignIn = () => {
 then(
   ()=>setSignedIn(true)
 ).then(
-  ()=>router.replace("/Protected/(tabs)")
+  ()=>router.replace("/(protected)/(tabs)")
 )}
 catch(e){
   console.log(e)
@@ -84,7 +84,7 @@ catch(e){
                 justifyContent:"center"
               }}
             >
-              
+              {/**facebook and google */}
               <View
                 style={{
                   alignItems:"center",
@@ -131,9 +131,9 @@ catch(e){
                   </Text>
                 </View>
               </View>
-              
+              {/** facebook and google*/}
 
-            
+              {/**OR */}
               <View
                 style={{
                   flexDirection: "row",
@@ -159,10 +159,10 @@ catch(e){
                   style={{ flex: 1, height: 1, backgroundColor: "#C7D0DB" }}
                 ></View>
               </View>
-            
+              {/** OR*/}
               
 
-              
+              {/**Email */}
                <Controller
                         name="email"
                         control={control}
@@ -186,9 +186,9 @@ catch(e){
                 />
               </View>)}/>
               {errors.email&&<Text style={Texts.error}>❗ {errors.email.message}</Text>}
-          
+              {/**Email */}
 
-              
+              {/**Password */}
                <Controller
                         name="password"
                         control={control}
@@ -230,14 +230,19 @@ catch(e){
 
               </View>)}/>
               {errors.password&&<Text style={Texts.error}>❗ {errors.password.message}</Text>}
-              <TouchableOpacity style={{marginLeft:"auto",marginBottom:spaces}} onPress={()=>router.push("/forgotPassword")}>
+              <TouchableOpacity style={{marginLeft:"auto",marginBottom:spaces}} onPress={()=>router.push("/(auth)/forgotPassword")}>
               <Text style={[Texts.default,{color:"blue"}]}>
                 Forgot Password?
               </Text>
               </TouchableOpacity>
-             
+              {/**Password */}
 
-             
+              {/** */}
+
+              
+              {/** */}
+
+              {/** */}
               <TouchableOpacity
                 style={[ButtonStyle,{marginBottom:spaces}]}
                  onPress={handleSubmit(onSubmit)}
@@ -246,16 +251,18 @@ catch(e){
                   Sign In
                 </Text>
               </TouchableOpacity>
-             
+              {/** */}
+
+              {/** */}
               <View style={{flexDirection:"row"}}>
                 <Text style={[{ color: "white", textAlign: "center" },Texts.default]}>
                   Don't have an account?{" "}</Text>
-                  <TouchableOpacity onPress={()=>router.push("/signUp")}>
+                  <TouchableOpacity onPress={()=>router.push("/(auth)/signUp")}>
                   <Text style={[{ color: "blue" },Texts.default]}>Sign Up</Text>
                   </TouchableOpacity>
               </View>
 
-              
+              {/** */}
             </View>
           </ParallaxScrollView>
             </>

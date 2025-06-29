@@ -56,7 +56,7 @@ then(
   ()=>setPassword(null)
 ).then(()=>setSignedIn(true))
 .then(
-  ()=>router.replace("/Protected/(tabs)")
+  ()=>router.replace("/(protected)/(tabs)")
 )}
 catch(e){
   console.log(e)
@@ -67,7 +67,7 @@ else{
     email:email,
     verificationCode:`${value1}${value2}${value3}${value4}${value5}`})
     .then(
-      ()=>router.push("/resetPassword")
+      ()=>router.push("/(auth)/resetPassword")
     )}
     catch(e){
       console.log(e)

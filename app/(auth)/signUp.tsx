@@ -26,9 +26,11 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 const {width}=Dimensions.get("window")
 const spaces = width*0.08
-const setEmail = useAuthStore((state)=>state.setEmail)
-const setPassword =useAuthStore((state)=>state.setPassword)
+
+
 const SignUp = () => {
+    const setPassword =useAuthStore((state)=>state.setPassword)
+    const setEmail = useAuthStore((state)=>state.setEmail)
 const onSubmit =async (data:any)=>{
   try{
   await Axios.post(`${BASEURL}/auth/signUp`,{
@@ -37,7 +39,7 @@ const onSubmit =async (data:any)=>{
   setEmail(data.email)
   setPassword(data.password)
  }
- ).then(()=>router.push("/otpVerify"))}
+ ).then(()=>router.push("/(auth)/otpVerify"))}
  catch(e){
 console.log(e)
  }
@@ -55,20 +57,20 @@ console.log(e)
   <Stack.Screen options={{headerShown:false}}/>
   
     <ParallaxScrollView 
-       headerBackgroundColor={{dark:"white",light:"white"}}
-       headerImage={<Image source={require("@/assets/images/image.jpg")} style={{height:width,width:width}}/>}>
-               <View
-                 style={{
-                   marginTop: spaces,
-                   padding: 10,
-                   margin: 10,
-                   backgroundColor: "rgba(0,0,0,0.1)",
-                   borderRadius: 18,
-                   alignItems:"center",
-                   justifyContent:"center"
-                 }}
-               >
-       
+    headerBackgroundColor={{dark:"white",light:"white"}}
+    headerImage={<Image source={require("@/assets/images/image.jpg")} style={{height:width,width:width}}/>}>
+            <View
+              style={{
+                marginTop: spaces,
+                padding: 10,
+                margin: 10,
+                backgroundColor: "rgba(0,0,0,0.1)",
+                borderRadius: 18,
+                alignItems:"center",
+                justifyContent:"center"
+              }}
+            >
+              {/**facebook and google */}
               <View
                 style={{
                   alignItems:"center",
@@ -115,9 +117,9 @@ console.log(e)
                   </Text>
                 </View>
               </View>
-              
+              {/** facebook and google*/}
 
-              
+              {/**OR */}
               <View
                 style={{
                   flexDirection: "row",
@@ -143,7 +145,9 @@ console.log(e)
                   style={{ flex: 1, height: 1, backgroundColor: "#C7D0DB" }}
                 ></View>
               </View>
-              
+              {/** OR*/}
+
+              {/**Username */}
           <Controller
           name="username"
           control={control}
@@ -169,9 +173,9 @@ console.log(e)
           )}
           />
           {errors.username&&<Text style={Texts.error}>❗ {errors.username.message}</Text>}
-          
+              {/** Username*/}
 
-            
+              {/**Email */}
                <Controller
           name="email"
           control={control}
@@ -195,9 +199,9 @@ console.log(e)
                 />
               </View>)}/>
               {errors.email&&<Text style={Texts.error}>❗ {errors.email.message}</Text>}
-              
+              {/**Email */}
 
-              
+              {/**Password */}
                <Controller
           name="password"
           control={control}
@@ -239,9 +243,9 @@ console.log(e)
 
               </View>)}/>
               {errors.password&&<Text style={Texts.error}>❗ {errors.password.message}</Text>}
-              
+              {/**Password */}
 
-              
+              {/** */}
 
               
                 
@@ -251,9 +255,9 @@ console.log(e)
                     <Text style={{ color: "blue" }}>Privacy Policy</Text>
                   </Text>
               
-              
+              {/** */}
 
-        
+              {/** */}
               <TouchableOpacity
               onPress={handleSubmit(onSubmit,(formErrors)=>{
                 console.log(formErrors)
@@ -264,18 +268,18 @@ console.log(e)
                   Create Account
                 </Text>
               </TouchableOpacity>
-              
+              {/** */}
 
-              
+              {/** */}
               <View style={{flexDirection:"row"}}>
                 <Text style={[{ color: "white", textAlign: "center" },Texts.default]}>
                   Do you already have an account?{" "}</Text>
-                  <TouchableOpacity onPress={()=>router.push("/signIn")}>
+                  <TouchableOpacity onPress={()=>router.push("/(auth)/signIn")}>
                   <Text style={[{ color: "blue" },Texts.default]}>Sign in</Text>
                   </TouchableOpacity>
               </View>
 
-              
+              {/** */}
             </View>
           </ParallaxScrollView>
             </>

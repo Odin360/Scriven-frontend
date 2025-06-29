@@ -47,7 +47,7 @@ const onSubmit =async(data:any)=>{
   try{
  await Axios.post(`${BASEURL}/auth/resetPassword`,{email:email,password:data.newPassword})
  .then(
-  ()=>router.replace("/signIn")
+  ()=>router.replace("/")
  )}
  catch(e){
   console.log(e)

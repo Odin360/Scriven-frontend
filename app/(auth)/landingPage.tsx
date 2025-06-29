@@ -23,12 +23,12 @@ const landingPage = () => {
           <Text style={[Texts.title,{marginBottom:spaces,textAlign:"center",color:Colors.light.secondaryTextColor}]}>Welcome to Odin 360</Text>
           <Text style={[Texts.defaultSemiBold,{marginBottom:spaces,textAlign:"center"}]}>Are you looking for a way to manage your team?</Text>
           <Text style={[Texts.defaultSemiBold,{marginBottom:spaces,textAlign:"center"}]}>Get started and we'll provide you with everything you need</Text>
-          <TouchableOpacity onPress={()=>router.replace("/onBoarding")} style={ButtonStyle}>
+          <TouchableOpacity onPress={()=>router.replace("/(auth)/onBoarding")} style={ButtonStyle}>
             <Text style={Texts.buttonText}>Get Started</Text>
           </TouchableOpacity>
           <View style={[{flexDirection:"row",marginTop:spaces}]}>
           <Text style={[Texts.defaultSemiBold]}>Do you already have an account ? </Text>
-          <TouchableOpacity onPress={()=>router.replace("/signIn")}>
+          <TouchableOpacity onPress={()=>router.replace("/")}>
           <Text style={[Texts.default,{color:Colors.light.primaryTextColor}]}>SignIn</Text>
           </TouchableOpacity>
           </View>

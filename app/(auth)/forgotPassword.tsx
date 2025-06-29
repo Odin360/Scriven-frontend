@@ -35,7 +35,7 @@ const spaces = width * 0.08
     try{
     await Axios.post(`${BASEURL}/auth/verifyEmail`,{email:data.email})
     .then(()=>setEmail(data.email))
-    .then(()=>router.push("/otpVerify"))}
+    .then(()=>router.push("/(auth)/otpVerify"))}
     catch(e){
       console.log(e)
     }

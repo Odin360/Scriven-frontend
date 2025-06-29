@@ -160,9 +160,9 @@ const messages = () => {
           onSelect={(channel)=>{
             setChannel(channel)
             if(channel._data.members?.includes("Maya-v2")){      
-            router.push("/Protected/(OtherScreens)/mayaChatScreen")}
+            router.push("/(protected)/(otherScreens)/mayaChatScreen")}
             else{
-              router.push("/Protected/(OtherScreens)/chatScreen")
+              router.push("/(protected)/(otherScreens)/chatScreen")
             }
           }}
           filters={channelFilters}

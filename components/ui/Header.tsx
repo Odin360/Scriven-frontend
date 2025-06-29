@@ -73,7 +73,7 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
             <Animated.View style={[styles.subHeader,subHeaderStyle]}>
                 <Text style={[styles.subHeaderText, { color: colors.text }]}>Conversations</Text>
                 <View style={styles.subHeaderIcons}>
-                    <TouchableOpacity style={styles.iconButton} onPress={()=>router.push("/Protected/teamMembers")}>
+                    <TouchableOpacity style={styles.iconButton} onPress={()=>router.push("/(protected)/(otherScreens)/teamMembers")}>
                         <FontAwesome5 name="teamspeak" size={24} color={colors.primary} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>

@@ -8,7 +8,7 @@ export default function ProtectedLayout(){
             <BottomSheetModalProvider>
         <Stack screenOptions={{headerShown:false}}>
             <Stack.Screen name="(tabs)"/>
-            <Stack.Screen name="(OtherScreens)"/>
+            <Stack.Screen name="(otherScreens)"/>
         </Stack>
         </BottomSheetModalProvider>
        </ChatProvider> 
