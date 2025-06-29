@@ -92,7 +92,7 @@ const profile = () => {
         </ThemedView>
 
         <TouchableOpacity 
-          onPress={() => router.push("/")}
+          onPress={() => router.push("/(protected)/(otherScreens)/settings")}
           style={[styles.card, { borderColor: colors.border, backgroundColor: colors.background }]}
         >
           <View style={styles.menuItem}>
