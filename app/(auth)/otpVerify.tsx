@@ -33,7 +33,10 @@ const previousRoute = usePreviousNavigationName()
   const [value4,setValue4]=useState<String>();
   const [value5,setValue5]=useState<String>();
   const [counter,setCounter]=useState<number>(60);
+<<<<<<< HEAD
   const setUsername = useUserStore(state=>state.setUsername)
+=======
+>>>>>>> 5d3d25940a99dcf13a0b7a3f3c5a62b5c98fa1a4
 
   
   const onSubmit=async()=>{
@@ -51,7 +54,10 @@ await Axios.post(`${BASEURL}/auth/verifyUser`,{
   (response)=>{
     setUserId(response.data.id)
     setUserEmail(response.data.email)
+<<<<<<< HEAD
     setUsername(response.data.username)
+=======
+>>>>>>> 5d3d25940a99dcf13a0b7a3f3c5a62b5c98fa1a4
   }
 ).
 then(
