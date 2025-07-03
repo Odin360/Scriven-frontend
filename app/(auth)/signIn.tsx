@@ -37,11 +37,8 @@ const SignIn = () => {
   const setSignedIn = useAuthStore((state)=>state.setSignedIn)
   const setUserId = useUserStore(state=>state.setUserId)
   const setUserEmail = useUserStore(state=>state.setUserEmail)
-<<<<<<< HEAD
   const setUsername = useUserStore(state=>state.setUsername)
-=======
->>>>>>> 5d3d25940a99dcf13a0b7a3f3c5a62b5c98fa1a4
-  
+
 
    const {control,handleSubmit,formState:{errors}}=useForm({
       resolver:zodResolver(SignInSchema)
@@ -59,10 +56,8 @@ const SignIn = () => {
   (response)=>{
     setUserId(response.data.id)
     setUserEmail(response.data.email)
-<<<<<<< HEAD
+
     setUsername(response.data.username)
-=======
->>>>>>> 5d3d25940a99dcf13a0b7a3f3c5a62b5c98fa1a4
   }
 ).
 then(
