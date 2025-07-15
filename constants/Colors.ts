@@ -17,12 +17,12 @@ export const Colors : any = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
     gradientBackground:["#F350F0","#7CF2FF"],
-    primaryButtonColor:"#3461FD",
+    primary:"#3461FD",
     primaryTextColor:"#3461FD",
     ButtonTextColor:"#F5F9FE",
     primaryColor:"#3461FD",
-    secondaryColor:"#F5F9FE",
-    secondaryTextColor:"#F5F9FE"
+    secondary:"#F5F9FE",
+    border:"#3461FD"
   },
   dark: {
     text: '#ECEDEE',
@@ -33,5 +33,8 @@ export const Colors : any = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorLight,
+    primary:"white",
+    secondary:"grey",
+    border:'grey'
   },
 };

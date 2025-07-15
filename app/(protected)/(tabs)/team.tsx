@@ -12,12 +12,8 @@ import { Ionicons } from '@expo/vector-icons';
 import QrCode from '@/components/ui/QrCode';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
-import BottomSheet from '@/components/ui/BottomSheet';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import CustomBottomSheetView from '@/components/ui/CustomBottomSheetView';
-import CreateTeam from '../(otherScreens)/createTeam';
-import JoinTeamScreen from '../(otherScreens)/JoinTeamScreen';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { router } from 'expo-router';
 
 const uuid = '123e4567-e89b-12d3-a456-426614174000';
 const { width } = Dimensions.get('window');
@@ -27,18 +23,7 @@ const Team = () => {
   const [visible, setVisible] = useState(false);
   const { colors } = useTheme();
 
-  const bottomSheetRef1 = useRef<BottomSheetModal>(null);
-  const bottomSheetRef2 = useRef<BottomSheetModal>(null);
-
-  const HandleCreateBottomSheetPress = () => {
-    bottomSheetRef2.current?.close();
-    bottomSheetRef1.current?.present();
-  };
-
-  const HandleJoinBottomSheetPress = () => {
-    bottomSheetRef1.current?.close();
-    bottomSheetRef2.current?.present();
-  };
+  
 
   const HandleScanQrCode = () => {
     if (!permission) return;
@@ -64,7 +49,7 @@ const Team = () => {
 
         {/* Create Team Button */}
         <TouchableOpacity
-          onPress={HandleCreateBottomSheetPress}
+          onPress={()=>router.push("/createTeam")}
           style={[styles.button, { borderColor: colors.primary, backgroundColor: colors.background }]}
         >
           <View style={styles.buttonContent}>
@@ -76,7 +61,7 @@ const Team = () => {
 
         {/* Join Team Button */}
         <TouchableOpacity
-          onPress={HandleJoinBottomSheetPress}
+          onPress={()=>router.push("/JoinTeamScreen")}
           style={[styles.button, { borderColor: colors.primary, backgroundColor: colors.background }]}
         >
           <View style={styles.buttonContent}>
@@ -106,19 +91,8 @@ const Team = () => {
         </View>
       </View>
 
-      {/* Bottom Sheet: Create Team */}
-      <BottomSheet ref={bottomSheetRef1}>
-        <CustomBottomSheetView>
-          <CreateTeam />
-        </CustomBottomSheetView>
-      </BottomSheet>
+    
 
-      {/* Bottom Sheet: Join Team */}
-      <BottomSheet ref={bottomSheetRef2}>
-        <CustomBottomSheetView>
-          <JoinTeamScreen />
-        </CustomBottomSheetView>
-      </BottomSheet>
 
       {/* Modal: Camera View for QR Scanning */}
       <Modal visible={visible} transparent onRequestClose={() => setVisible(false)}>

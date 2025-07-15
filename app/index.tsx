@@ -5,11 +5,8 @@ import { Redirect, router, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import {useVideoPlayer, VideoView} from 'expo-video'
 import { useAuthStore } from '@/store/useAuthStore'
-import GradientClock from '@/components/ui/GradientClock'
 import  { BottomSheetModal } from '@gorhom/bottom-sheet'
-import BottomSheet from '@/components/ui/BottomSheet'
 import { ThemedView } from '@/components/ThemedView'
-import CustomBottomSheetView from '@/components/ui/CustomBottomSheetView'
 const {width,height} = Dimensions.get("window")
  const video = require("@/assets/videos/DIN.mp4")
 

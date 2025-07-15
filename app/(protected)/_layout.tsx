@@ -7,12 +7,10 @@ export default function ProtectedLayout(){
     return (
         <ChatProvider>
             <VideoProvider>
-            <BottomSheetModalProvider>
         <Stack screenOptions={{headerShown:false}}>
             <Stack.Screen name="(tabs)"/>
             <Stack.Screen name="(otherScreens)"/>
         </Stack>
-        </BottomSheetModalProvider>
         </VideoProvider>
        </ChatProvider> 
         

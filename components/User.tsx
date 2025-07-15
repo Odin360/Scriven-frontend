@@ -31,7 +31,7 @@ export default function User({ user }: UserProps) {
         const channel = client.channel("messaging",{members:[userId,user.id]})
         await channel.watch()
         setChannel(channel)
-        router.push(`/Protected/chatScreen`)
+       router.push('/(protected)/(otherScreens)/chatScreen')
     }
 
     const getInitials = (name: string) => {

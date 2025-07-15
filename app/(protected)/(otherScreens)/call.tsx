@@ -2,6 +2,7 @@ import {View,Text,StyleSheet} from "react-native"
 import {router, useLocalSearchParams} from "expo-router"
 import {StreamCall,CallContent, useStreamVideoClient,CallingState, Call} from "@stream-io/video-react-native-sdk"
 import { useEffect,useState } from "react";
+import { CustomCallRecordButton } from "@/components/ui/CallRecordingButton";
 export default function CallScreen(){
     const client = useStreamVideoClient()
     const {meetingID} = useLocalSearchParams()
@@ -31,7 +32,10 @@ export default function CallScreen(){
   }
     return (
     <StreamCall call={call}>
+      <View style={{flex:1}}>
+      <CustomCallRecordButton/>
    <CallContent onHangupCallHandler={()=>router.back()}/>
+   </View>
     </StreamCall>)
 }
 const styles=StyleSheet.create({

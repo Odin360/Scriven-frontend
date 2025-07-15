@@ -109,7 +109,7 @@ const CreateTeam = () => {
   }
 
   return (
-    <BottomSheetScrollView showsVerticalScrollIndicator={false}  style={[styles.container, { backgroundColor: colors.background }]}>
+    <ScrollView showsVerticalScrollIndicator={false}  style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={[colors.primary, colors.background]}
         style={styles.headerGradient}
@@ -245,7 +245,7 @@ const CreateTeam = () => {
           
         </TouchableOpacity>
       </Animated.View>
-    </BottomSheetScrollView>
+    </ScrollView>
   )
 }
 

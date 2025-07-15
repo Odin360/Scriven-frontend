@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState,useEffect } from 'react';
-import { ActivityIndicator, FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { ActivityIndicator,  FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import { BASEURL } from '@/constants/Api';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useUserStore } from '@/store/useUserStore';
 import { useTeamStore } from '@/store/useTeamStore';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function JoinTeamScreen() {
@@ -91,6 +91,7 @@ if(!teams){
   );
 
   return (
+    <SafeAreaView style={{flex:1}}>
     <View style={{flex:1,borderRadius:25,padding:10}}>
         <View style={styles.searchWrapper}>
           <TextInput
@@ -103,7 +104,7 @@ if(!teams){
           <MaterialCommunityIcons name="magnify" size={20} color="#555" style={styles.searchIcon} />
         </View>
 
-        <BottomSheetFlatList
+        <FlatList
           data={teams}
           keyExtractor={(item) => item.id}
           renderItem={renderTeam}
@@ -113,6 +114,7 @@ if(!teams){
 
         <Toast />
         </View>
+        </SafeAreaView>
     
   );
 }

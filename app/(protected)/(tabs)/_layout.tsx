@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform, View } from 'react-native';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { Platform, View,Text, Dimensions } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -13,42 +13,35 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTheme } from '@react-navigation/native';
 import ChatProvider from '@/providers/ChatProvider';
-
+import CustomTabBar from '@/components/ui/CustomTabBar';
+import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
+ 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { colors } = useTheme();
+// 👇 BottomSheetModal ref
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  // 👇 Define snap points
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+  // 👇 Function to show the modal
+  const openModal = () => {
+    bottomSheetRef.current?.present();
+  };
+  const {width} = Dimensions.get("window")
+
+
 
   return (
     
+    <BottomSheetModalProvider>
     <Tabs
-      screenOptions={{
-        headerShown: false,
-        animation: "shift",
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.text,
-        tabBarButton: HapticTab,
-        tabBarBackground: BlurTabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-            backgroundColor: 'transparent',
-            height: 60,
-            paddingBottom: 5,
-          },
-          android: {
-            position: 'absolute',
-            backgroundColor: 'transparent',
-            height: 60,
-            paddingBottom: 5,
-          },
-          default: {},
-        }),
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
-        },
-      }}>
-     
+     tabBar={(props) => <CustomTabBar {...props} />}
+  screenOptions={{
+    headerShown: false,
+    animation: 'shift',
+  }}>
       <Tabs.Screen
         name="talk"
         options={{
@@ -97,9 +90,11 @@ export default function TabLayout() {
             </View>
           ),
         }}
+        
         listeners={{
           tabPress: (e) => {
             e.preventDefault()
+            openModal()
           }
         }}
       /> 
@@ -130,6 +125,18 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-    
+     <BottomSheetModal
+        ref={bottomSheetRef}
+        index={1}
+        snapPoints={snapPoints}
+        backgroundStyle={{flex:1, backgroundColor: colors.card,borderTopLeftRadius:width/2,borderTopRightRadius:width/2,justifyContent:"center",alignItems:"center" }}
+      >
+        <BottomSheetView>
+        <View style={{ alignItems:"center",justifyContent:"center",flex:1}}>
+          <Text style={{ color: colors.text }}>Your Modal Content</Text>
+        </View>
+        </BottomSheetView>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
