@@ -1964,6 +1964,11 @@
   resolved "https://registry.yarnpkg.com/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz#3dc35ba0f1e66b403c00b39344f870298ebb1c8e"
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
+"@notifee/react-native@^9.1.8":
+  version "9.1.8"
+  resolved "https://registry.yarnpkg.com/@notifee/react-native/-/react-native-9.1.8.tgz#3d55cb3fbcc21f9e35931e366afdf64b294da891"
+  integrity sha512-Az/dueoPerJsbbjRxu8a558wKY+gONUrfoy3Hs++5OqbeMsR0dYe6P+4oN6twrLFyzAhEA1tEoZRvQTFDRmvQg==
+
 "@op-engineering/op-sqlite@^14.1.1":
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/@op-engineering/op-sqlite/-/op-sqlite-14.1.1.tgz#f0db3c1048526d4c623ca10f83539a4d450dae06"
@@ -4508,6 +4513,11 @@ expo-sharing@~13.1.5:
   version "13.1.5"
   resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-13.1.5.tgz#73d86cdcc037b46ddc82be224dfd3d6bceec497c"
   integrity sha512-X/5sAEiWXL2kdoGE3NO5KmbfcmaCWuWVZXHu8OQef7Yig4ZgHFkGD11HKJ5KqDrDg+SRZe4ISd6MxE7vGUgm4w==
+
+expo-speech-recognition@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/expo-speech-recognition/-/expo-speech-recognition-2.1.1.tgz#8bc434ec23a8c02eb87e71b56f0bc82f89a1e712"
+  integrity sha512-TISNa9UIi01TlZfxyXU6jLC4f18yyXJgIMRM30PqSETbbQI8BafgkCIRBnZVvGR3wbyeNvG9zHc76du/vuiPLQ==
 
 expo-splash-screen@~0.30.9:
   version "0.30.9"

@@ -40,7 +40,15 @@
             ]
         }
       }
-    ], "@stream-io/video-react-native-sdk",
+    ], [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ],
+       "@stream-io/video-react-native-sdk",
       [
         "@config-plugins/react-native-webrtc",
         {
