@@ -40,10 +40,15 @@
             ]
         }
       }
-    ],
-     "@stream-io/video-react-native-sdk",
-    "@react-native-firebase/app",
-    "@react-native-firebase/messaging",
+    ], [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ],
+       "@stream-io/video-react-native-sdk",
       [
         "@config-plugins/react-native-webrtc",
         {
@@ -93,14 +98,7 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
-      ],
-       [
-      "@react-native-voice/voice",
-      {
-        "microphonePermission": "CUSTOM: Allow $(PRODUCT_NAME) to access the microphone",
-        "speechRecognitionPermission": "CUSTOM: Allow $(PRODUCT_NAME) to securely recognize user speech"
-      }
-    ]
+      ]
     ],
     "experiments": {
       "typedRoutes": true
