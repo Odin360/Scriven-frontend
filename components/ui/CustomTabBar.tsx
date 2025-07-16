@@ -133,7 +133,6 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
         style={styles.absolute}
         intensity={40}
         tint={theme === 'dark' ? 'dark' : 'light'}
-        experimentalBlurMethod="dimezisBlurView"
       />
       <View style={styles.container}>
         <Animated.View style={[styles.indicator, indicatorStyle]} />
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     right: 16,
     height: 80,
     borderRadius: 40,
-    overflow: 'visible',
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,

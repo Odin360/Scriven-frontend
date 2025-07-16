@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
-import React, { useCallback, useMemo, useRef } from 'react';
-import { Platform, View,Text, Dimensions } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Platform, View,Text, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -15,15 +15,19 @@ import { useTheme } from '@react-navigation/native';
 import ChatProvider from '@/providers/ChatProvider';
 import CustomTabBar from '@/components/ui/CustomTabBar';
 import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
- 
+import {IconProps, MicrophoneIcon} from "phosphor-react-native" 
+import tools from '@/Utils/tools';
+import ConvAiDOMComponent from '@/components/ConvAI';
+
 export default function TabLayout() {
+  const [microphoneState,setMicrophoneState]=useState<IconProps>({color:"white",weight:"regular"})
   const colorScheme = useColorScheme();
   const { colors } = useTheme();
 // 👇 BottomSheetModal ref
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   // 👇 Define snap points
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const snapPoints = useMemo(() => ['25%'], []);
 
   // 👇 Function to show the modal
   const openModal = () => {
@@ -129,14 +133,36 @@ export default function TabLayout() {
         ref={bottomSheetRef}
         index={1}
         snapPoints={snapPoints}
-        backgroundStyle={{flex:1, backgroundColor: colors.card,borderTopLeftRadius:width/2,borderTopRightRadius:width/2,justifyContent:"center",alignItems:"center" }}
+        backgroundStyle={{ backgroundColor: colors.card,borderTopLeftRadius:width/2,borderTopRightRadius:width/2 }}
       >
-        <BottomSheetView>
-        <View style={{ alignItems:"center",justifyContent:"center",flex:1}}>
-          <Text style={{ color: colors.text }}>Your Modal Content</Text>
+        <BottomSheetView style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+        <View
+        style={styles.domComponentContainer}>
+         <ConvAiDOMComponent
+            dom={{ style: styles.domComponent }}
+            platform={Platform.OS}
+            get_battery_level={tools.get_battery_level}
+            change_brightness={tools.change_brightness}
+            flash_screen={tools.flash_screen}
+          />
         </View>
         </BottomSheetView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
   );
 }
+
+const styles= StyleSheet.create({
+    domComponentContainer: {
+    width: 120,
+    height: 120,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 24,
+  },
+    domComponent: {
+    width: 120,
+    height: 120,
+  },
+
+})
