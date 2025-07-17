@@ -24,6 +24,7 @@ const mayaChatScreen = () => {
     useEffect(()=>{
     const HandleMessage=async(event:any)=>{
        if(!mayaChannel)return
+       console.log(event)
         const message =event.message
           console.log('User message received:',message.text)
          

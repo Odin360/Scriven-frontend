@@ -48,7 +48,9 @@
           "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
         }
       ],
-       "@stream-io/video-react-native-sdk",
+       ["@stream-io/video-react-native-sdk",{
+        "enableScreenshare": true
+       }],
       [
         "@config-plugins/react-native-webrtc",
         {

@@ -4319,6 +4319,11 @@ expo-build-properties@~0.14.6:
     ajv "^8.11.0"
     semver "^7.6.0"
 
+expo-calendar@^14.1.4:
+  version "14.1.4"
+  resolved "https://registry.yarnpkg.com/expo-calendar/-/expo-calendar-14.1.4.tgz#2782b613f8b7a13da63caa7952c04e8b52df225f"
+  integrity sha512-4h23qUBqQNIvLsx2FfL6DcmxgZvhCbMqUN55UQIiBeHlCnyrcNu6Fo9c179aWsgh35nbD+mntt1AaEOplHTzeg==
+
 expo-camera@^16.1.9:
   version "16.1.9"
   resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-16.1.9.tgz#f0f06ed3fc4007e2c84c0711875c0e575ba4615d"
@@ -4518,6 +4523,11 @@ expo-speech-recognition@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/expo-speech-recognition/-/expo-speech-recognition-2.1.1.tgz#8bc434ec23a8c02eb87e71b56f0bc82f89a1e712"
   integrity sha512-TISNa9UIi01TlZfxyXU6jLC4f18yyXJgIMRM30PqSETbbQI8BafgkCIRBnZVvGR3wbyeNvG9zHc76du/vuiPLQ==
+
+expo-speech@^13.1.7:
+  version "13.1.7"
+  resolved "https://registry.yarnpkg.com/expo-speech/-/expo-speech-13.1.7.tgz#b5b4cc3617eaf9040dd3eef3fdf20e7d81cb4418"
+  integrity sha512-RMMgK6IIPQD9uLhmY2Q9v+2j3wmTGqB/qZ7sdy5//5TLCzFwAq1vlpy5A2psVsctoWVxUO4EmlaNai0ahQmKRg==
 
 expo-splash-screen@~0.30.9:
   version "0.30.9"
