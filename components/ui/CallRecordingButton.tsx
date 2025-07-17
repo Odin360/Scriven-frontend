@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useCall, useCallStateHooks } from "@stream-io/video-react-native-sdk";
 
-import { ActivityIndicator, Button } from "react-native";
+import { ActivityIndicator, Button, TouchableOpacity,Text } from "react-native";
+import { RecordIcon } from "phosphor-react-native";
 
 export const CustomCallRecordButton = () => {
   const call = useCall();
@@ -28,7 +29,7 @@ export const CustomCallRecordButton = () => {
     try {
       setIsAwaitingResponse(true);
       if (isCallRecordingInProgress) {
-        await call?.stopRecording();
+        await call?.stopRecording().then(async()=>{ await call.queryRecordings()}).then((data)=>console.log(data));
       } else {
         await call?.startRecording();
       }
@@ -40,9 +41,10 @@ export const CustomCallRecordButton = () => {
   return isAwaitingResponse ? (
     <ActivityIndicator />
   ) : (
-    <Button
+    <TouchableOpacity
       onPress={toggleRecording}
-      title={`${isCallRecordingInProgress ? "Stop" : "Start"} Recording`}
-    />
+    >
+     <RecordIcon size={32} weight="fill" color={isCallRecordingInProgress?"red":"white"}/> 
+      </TouchableOpacity>
   );
 };

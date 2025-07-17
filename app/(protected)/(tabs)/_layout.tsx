@@ -23,7 +23,7 @@ import * as Speech from "expo-speech"
 
 
 export default function TabLayout() {
-  const [microphoneState,setMicrophoneState]=useState<IconProps>({color:"white",weight:"thin"})
+  const [microphoneState,setMicrophoneState]=useState<IconProps>({color:"black",weight:"thin"})
   const colorScheme = useColorScheme();
   const { colors } = useTheme();
   const{handleStart,handleStop,recognizing,transcript,setTranscript}=useSpeechRecognition()
@@ -41,7 +41,7 @@ export default function TabLayout() {
 useEffect(()=>{
   if(!recognizing && transcript){
     Speech.speak(transcript)
-    if(!Speech.isSpeakingAsync) setTranscript("")    
+   setInterval(()=>setTranscript(""),3000)    
   }
 },[transcript,recognizing])
 
@@ -163,15 +163,15 @@ useEffect(()=>{
         }
           onPressOut={()=>{setMicrophoneState({
             weight:"thin",
-            color:"white"
+            color:"black"
           })
           handleStop()}
         }
           > 
           <MicrophoneIcon size={70} weight={microphoneState.weight} color={microphoneState.color}/>
               </Pressable>
-         {recognizing?<Text>Transcribing...</Text>:<Text>Hold the button to talk with maya</Text>} 
-          <Text style={{color:"white"}}>{transcript}</Text> 
+         {recognizing?<Text>Transcribing...</Text>:transcript?<Text></Text>:<Text></Text>} 
+          <Text style={{color:"black"}}>{transcript}</Text> 
         </View>
         </BottomSheetView>
       </BottomSheetModal>
