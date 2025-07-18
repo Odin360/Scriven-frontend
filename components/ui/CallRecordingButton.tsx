@@ -4,6 +4,7 @@ import { useCall, useCallStateHooks } from "@stream-io/video-react-native-sdk";
 import { ActivityIndicator, Button, TouchableOpacity,Text } from "react-native";
 import { RecordIcon } from "phosphor-react-native";
 
+
 export const CustomCallRecordButton = () => {
   const call = useCall();
   const { useIsCallRecordingInProgress } = useCallStateHooks();
@@ -19,17 +20,35 @@ export const CustomCallRecordButton = () => {
     const eventHandlers = [
       call.on("call.recording_started", () => setIsAwaitingResponse(false)),
       call.on("call.recording_stopped", () => setIsAwaitingResponse(false)),
+      
     ];
     return () => {
       eventHandlers.forEach((unsubscribe) => unsubscribe());
     };
   }, [call]);
+  
+  useEffect(()=>{
+   if(!call){
+    return
+   }
+    
+    const getRecording = async()=>{const recordings = await call.queryRecordings()
+      console.log(recordings)
+      return recordings
+    }
+  const unsuscribe= call.on("call.recording_ready",()=>getRecording())
+  return () => {
+    unsuscribe()
+      };
+  
+  },[call])
+  
 
   const toggleRecording = useCallback(async () => {
     try {
       setIsAwaitingResponse(true);
       if (isCallRecordingInProgress) {
-        await call?.stopRecording().then(async()=>{ await call.queryRecordings()}).then((data)=>console.log(data));
+        await call?.stopRecording();
       } else {
         await call?.startRecording();
       }
