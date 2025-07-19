@@ -14,6 +14,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router';
+import { useThemeColors } from '@/hooks/useThemeColor';
+import { CaretRightIcon, QrCodeIcon, UsersIcon, UsersThreeIcon } from 'phosphor-react-native';
 
 const uuid = '123e4567-e89b-12d3-a456-426614174000';
 const { width } = Dimensions.get('window');
@@ -21,7 +23,7 @@ const { width } = Dimensions.get('window');
 const Team = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [visible, setVisible] = useState(false);
-  const { colors } = useTheme();
+  const  colors  = useThemeColors();
 
   
 
@@ -37,7 +39,10 @@ const Team = () => {
 
   return (
     <>
-      <LinearGradient style={{ height: width * 0.3 }} colors={[colors.primary, colors.background]} />
+      <LinearGradient style={{ height: width * 0.3 }}
+      start={{x:0,y:0}}
+      end={{x:1,y:0}}
+       colors={[colors.gradientStart, colors.gradientMiddle,colors.gradientEnd]} />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Permission message */}
         {permission && !permission.granted && (
@@ -50,42 +55,42 @@ const Team = () => {
         {/* Create Team Button */}
         <TouchableOpacity
           onPress={()=>router.push("/createTeam")}
-          style={[styles.button, { borderColor: colors.primary, backgroundColor: colors.background }]}
+          style={[styles.button, { borderColor: colors.border, backgroundColor: colors.surface }]}
         >
           <View style={styles.buttonContent}>
-            <Ionicons name="people-outline" size={24} color={colors.primary} style={styles.buttonIcon} />
-            <Text style={[styles.buttonText, { color: colors.text }]}>Create Team</Text>
+            <UsersIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.buttonText, { color: colors.textPrimary }]}>Create Team</Text>
           </View>
-          <Ionicons name="chevron-forward" size={24} color={colors.primary} />
+        <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
         </TouchableOpacity>
 
         {/* Join Team Button */}
         <TouchableOpacity
           onPress={()=>router.push("/JoinTeamScreen")}
-          style={[styles.button, { borderColor: colors.primary, backgroundColor: colors.background }]}
+          style={[styles.button, { borderColor: colors.border, backgroundColor: colors.surface }]}
         >
           <View style={styles.buttonContent}>
-            <Ionicons name="person-add-outline" size={24} color={colors.primary} style={styles.buttonIcon} />
-            <Text style={[styles.buttonText, { color: colors.text }]}>Join Team</Text>
+            <UsersThreeIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.buttonText, { color: colors.textPrimary }]}>Join Team</Text>
           </View>
-          <Ionicons name="chevron-forward" size={24} color={colors.primary} />
+          <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
         </TouchableOpacity>
 
         {/* Scan QR Code Button */}
         <TouchableOpacity
           onPress={HandleScanQrCode}
-          style={[styles.button, { borderColor: colors.primary, backgroundColor: colors.background }]}
+          style={[styles.button, { borderColor: colors.border, backgroundColor: colors.surface }]}
         >
           <View style={styles.buttonContent}>
-            <Ionicons name="qr-code-outline" size={24} color={colors.primary} style={styles.buttonIcon} />
-            <Text style={[styles.buttonText, { color: colors.text }]}>Scan QR Code</Text>
+            <QrCodeIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.buttonText, { color: colors.textPrimary }]}>Scan QR Code</Text>
           </View>
-          <Ionicons name="chevron-forward" size={24} color={colors.primary} />
+         <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
         </TouchableOpacity>
 
         {/* QR Code View */}
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ borderColor: colors.primary, borderWidth: 1 }}>
+          <View style={{ borderColor: colors.border, borderWidth: 1 }}>
             <QrCode uuid={uuid} size={200} />
           </View>
         </View>

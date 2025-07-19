@@ -13,11 +13,13 @@ import { useTeamStore } from '@/store/useTeamStore'
 import { useChatContext } from 'stream-chat-expo'
 import { useUserStore } from '@/store/useUserStore'
 import {ChannelData} from "stream-chat"
+import { useThemeColors } from '@/hooks/useThemeColor'
+import { FolderIcon,MicrophoneStageIcon, GoogleDriveLogoIcon, UsersThreeIcon } from 'phosphor-react-native'
 
 const { width } = Dimensions.get('window')
 
 const CreateTeam = () => {
-  const { colors } = useTheme()
+  const  colors  = useThemeColors()
   const [teamName, setTeamName] = useState('')
   const [description, setDescription] = useState('')
   const [driveLink, setDriveLink] = useState('')
@@ -111,7 +113,9 @@ const CreateTeam = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}  style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.primary, colors.background]}
+        colors={[colors.gradientStart, colors.gradientMiddle,colors.gradientEnd]}
+        start={{x:0,y:0}}
+        end ={{x:1,y:0}}
         style={styles.headerGradient}
       />
       <Animated.View 
@@ -125,54 +129,53 @@ const CreateTeam = () => {
       >
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
-            <Ionicons name="people" size={20} color={colors.primary} />
-            <Text style={[styles.label, { color: colors.text }]}>Team Name</Text>
+            <UsersThreeIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.label, { color: colors.textPrimary }]}>Team Name</Text>
           </View>
           <TextInput
             style={[styles.input, { 
-              backgroundColor: colors.background,
-              color: colors.text,
-              borderColor: colors.primary
+              backgroundColor: colors.border,
+              color: colors.textPrimary,
+              borderColor: colors.border
             }]}
             value={teamName}
             onChangeText={setTeamName}
             placeholder="Enter team name"
-            placeholderTextColor={colors.text}
+            placeholderTextColor={colors.textSecondary}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
-            <Ionicons name="document-text" size={20} color={colors.primary} />
-            <Text style={[styles.label, { color: colors.text }]}>Description (max 30 words)</Text>
+            <MicrophoneStageIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.label, { color: colors.textPrimary }]}>Description (max 30 words)</Text>
           </View>
           <TextInput
             style={[styles.input, styles.textArea, { 
-              backgroundColor: colors.background,
-              color: colors.text,
-              borderColor: colors.primary
+              backgroundColor: colors.border,
+              color: colors.textPrimary,
+              borderColor: colors.border
             }]}
             value={description}
             onChangeText={handleDescriptionChange}
             placeholder="Enter team description"
-            placeholderTextColor={colors.text}
+            placeholderTextColor={colors.textSecondary}
             multiline
             numberOfLines={4}
             textAlignVertical="top"
           />
           <View style={styles.wordCountContainer}>
             <Text style={[styles.wordCount, { 
-              color: wordCount >= 30 ? colors.notification : colors.text 
+              color: wordCount >= 30 ? colors.dangerAccent : colors.secondaryButton 
             }]}>
               {wordCount}/30 words
             </Text>
           </View>
         </View>
 
-        <View style={[styles.stepsContainer, { backgroundColor: colors.card }]}>
+        <View style={[styles.stepsContainer, { backgroundColor: colors.surface }]}>
           <View style={styles.stepsHeader}>
-            <Ionicons name="folder" size={24} color={colors.primary} />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Steps to Create Shared Drive</Text>
+        <FolderIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Steps to Create Shared Drive</Text>
           </View>
           <View style={styles.stepsList}>
             {[
@@ -185,16 +188,16 @@ const CreateTeam = () => {
                 <View style={styles.stepContent}>
                   <View style={styles.stepLeft}>
                     <View style={[styles.stepNumberContainer, { 
-                      backgroundColor: colors.primary + '15',
-                      borderColor: colors.primary + '30'
+                      backgroundColor: colors.iconColor + '15',
+                      borderColor: colors.iconColor + '30'
                     }]}>
                       <View style={[styles.stepNumberInner, { 
-                        backgroundColor: colors.primary + '20',
-                        borderColor: colors.primary + '40'
+                        backgroundColor: colors.iconColor + '20',
+                        borderColor: colors.iconColor + '40'
                       }]}>
                         <Text style={[styles.stepNumber, { 
-                          color: colors.primary,
-                          textShadowColor: colors.primary + '40',
+                          color: colors.iconColor,
+                          textShadowColor: colors.shadow + '40',
                           textShadowOffset: { width: 0, height: 1 },
                           textShadowRadius: 2
                         }]}>{index + 1}</Text>
@@ -202,13 +205,13 @@ const CreateTeam = () => {
                     </View>
                     {index < 3 && (
                       <View style={[styles.stepConnector, { 
-                        backgroundColor: colors.primary + '15',
-                        borderColor: colors.primary + '30'
+                        backgroundColor: colors.iconColor + '15',
+                        borderColor: colors.iconColor + '30'
                       }]} />
                     )}
                   </View>
                   <View style={styles.stepTextContainer}>
-                    <Text style={[styles.stepText, { color: colors.text }]}>{step}</Text>
+                    <Text style={[styles.stepText, { color: colors.textPrimary }]}>{step}</Text>
                   </View>
                 </View>
               </View>
@@ -218,30 +221,30 @@ const CreateTeam = () => {
 
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
-            <Ionicons name="link" size={20} color={colors.primary} />
-            <Text style={[styles.label, { color: colors.text }]}>Google Drive Folder Link</Text>
+           <GoogleDriveLogoIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.label, { color: colors.textPrimary }]}>Google Drive Folder Link</Text>
           </View>
           <TextInput
             style={[styles.input, { 
-              backgroundColor: colors.background,
-              color: colors.text,
-              borderColor: colors.primary
+              backgroundColor: colors.border,
+              color: colors.textPrimary,
+              borderColor: colors.border
             }]}
             value={driveLink}
             onChangeText={setDriveLink}
             placeholder="Paste the sharing link here"
-            placeholderTextColor={colors.text}
+            placeholderTextColor={colors.textSecondary}
             autoCapitalize="none"
           />
         </View>
 
         <TouchableOpacity
-          style={[styles.createButton,{borderColor:colors.primary}]}
+          style={[styles.createButton,{borderColor:colors.primaryButton}]}
           onPress={handleCreateTeam}
           activeOpacity={0.8}
         >
          
-            <Text style={[styles.createButtonText,{color:colors.primary}]}>Create Team</Text>
+            <Text style={[styles.createButtonText,{color:colors.primaryButton}]}>Create Team</Text>
           
         </TouchableOpacity>
       </Animated.View>

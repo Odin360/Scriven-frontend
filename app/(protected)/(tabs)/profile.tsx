@@ -7,18 +7,19 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
 import { router } from 'expo-router';
-import { BlurView } from 'expo-blur';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
+import { useThemeColors } from '@/hooks/useThemeColor';
+import { CaretRightIcon, GearIcon, GreaterThanIcon, HeadCircuitIcon, QrCodeIcon, WalletIcon } from 'phosphor-react-native';
 
 const { width } = Dimensions.get("window");
 
 const Profile = () => {
-  const { colors } = useTheme();
+  const  colors  = useThemeColors();
 
   const fadeAnim = useSharedValue(0);
   const scaleAnim = useSharedValue(0.9);
@@ -57,39 +58,39 @@ const Profile = () => {
           animatedStyle
         ]}
       >
-        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.background }]}>
+        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
           <View style={styles.profileHeader}>
             <View style={styles.profileInfo}>
               <Text style={styles.name}>Williams</Text>
               <View style={styles.badgeContainer}>
-                <Ionicons name="qr-code-outline" size={24} color={colors.primary} />
+                <QrCodeIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
               </View>
             </View>
-            <Text style={[styles.email, { color: colors.text }]}>ki****@gmail.com</Text>
-            <Text style={[styles.team, { color: colors.text }]}>ScrivenTek</Text>
+            <Text style={[styles.email, { color: colors.textPrimary }]}>ki****@gmail.com</Text>
+            <Text style={[styles.team, { color: colors.textPrimary }]}>ScrivenTek</Text>
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
             <View style={styles.statusContainer}>
-              <View style={[styles.statusDot, { backgroundColor: colors.primary }]} />
-              <Text style={[styles.statusText, { color: colors.text }]}>Active Now</Text>
+              <View style={[styles.statusDot, { backgroundColor: colors.secondaryButton }]} />
+              <Text style={[styles.statusText, { color: colors.textPrimary }]}>Active Now</Text>
             </View>
           </View>
         </View>
 
-        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.background }]}>
+        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
           <TouchableOpacity style={styles.menuItem}>
             <View style={styles.menuItemContent}>
-              <Entypo name="wallet" size={24} color={colors.primary} />
+              <WalletIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
               <Text style={styles.menuText}>Wallet</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.text} />
+            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
           </TouchableOpacity>
           <View style={[styles.divider, { backgroundColor: colors.border }]} />
           <TouchableOpacity style={styles.menuItem} onPress={() => Linking.openURL(contactUs)}>
             <View style={styles.menuItemContent}>
-              <AntDesign name="customerservice" size={24} color={colors.primary} />
+              <HeadCircuitIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
               <Text style={styles.menuText}>Customer Service</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.text} />
+            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
           </TouchableOpacity>
         </View>
 
@@ -99,15 +100,15 @@ const Profile = () => {
         >
           <View style={styles.menuItem}>
             <View style={styles.menuItemContent}>
-              <Ionicons name="settings" size={24} color={colors.primary} />
+              <GearIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
               <Text style={styles.menuText}>Settings and Privacy</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.text} />
+            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.reportButton, { backgroundColor: colors.notification }]}
+          style={[styles.reportButton, { backgroundColor: colors.dangerAccent }]}
           activeOpacity={0.8}
           onPress={() => Linking.openURL(reportIssueMail)}
         >
@@ -118,7 +119,7 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.logoutButton, { backgroundColor: colors.notification }]}
+          style={[styles.logoutButton, { backgroundColor: colors.dangerAccent }]}
           activeOpacity={0.8}
         >
           <View style={styles.buttonContent}>

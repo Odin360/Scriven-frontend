@@ -15,17 +15,19 @@ import { useTheme } from '@react-navigation/native';
 import ChatProvider from '@/providers/ChatProvider';
 import CustomTabBar from '@/components/ui/CustomTabBar';
 import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
-import {IconProps, MicrophoneIcon} from "phosphor-react-native" 
+import {IconProps, MicrophoneIcon, ChatCircleIcon,ChartPieSliceIcon,UserIcon,BezierCurveIcon} from "phosphor-react-native" 
 import tools from '@/Utils/tools';
 import ConvAiDOMComponent from '@/components/ConvAI';
 import { useSpeechRecognition } from '@/components/SpeechRecognition';
 import * as Speech from "expo-speech"
+import { useThemeColors } from '@/hooks/useThemeColor';
+
 
 
 export default function TabLayout() {
   const [microphoneState,setMicrophoneState]=useState<IconProps>({color:"black",weight:"thin"})
   const colorScheme = useColorScheme();
-  const { colors } = useTheme();
+  const colors  = useThemeColors();
   const{handleStart,handleStop,recognizing,transcript,setTranscript}=useSpeechRecognition()
 // 👇 BottomSheetModal ref
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -61,10 +63,11 @@ useEffect(()=>{
           tabBarBadge: "2",
           title: 'Chat',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons 
-              name={focused ? "chatbubbles" : "chatbubbles-outline"} 
+            <ChatCircleIcon  
               size={size} 
-              color={color} 
+              color={color}
+              weight="duotone"
+              duotoneColor={colors.iconSecondary} 
             />
           ),
         }}
@@ -74,9 +77,10 @@ useEffect(()=>{
         options={{
           title: 'Workspace',
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialIcons 
-              name={focused ? "workspaces-filled" : "workspaces-outline"} 
+            <ChartPieSliceIcon 
               size={size} 
+              weight="duotone"
+              duotoneColor={colors.iconSecondary}
               color={color} 
             />
           ),
@@ -90,16 +94,16 @@ useEffect(()=>{
           tabBarIconStyle: { height: 50, width: 50, position: "absolute" },
           tabBarIcon: ({ color, size }) => (
             <View style={{
-              backgroundColor: colors.primary,
+              backgroundColor: colors.primaryButton,
               borderRadius: 25,
               padding: 8,
               elevation: 5,
-              shadowColor: colors.primary,
+              shadowColor: colors.primaryButton,
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
             }}>
-              <AntDesign name="plus" size={30} color="white" />
+              <MicrophoneIcon  size={30} color="white" weight="duotone" duotoneColor={colors.iconSecondary}/>
             </View>
           ),
         }}
@@ -116,10 +120,11 @@ useEffect(()=>{
         options={{
           title: 'Team',
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialCommunityIcons 
-              name={focused ? "account-group" : "account-group-outline"} 
+            <BezierCurveIcon  
               size={size} 
               color={color} 
+              weight='duotone'
+              duotoneColor={colors.iconSecondary}
             />
           ),
         }}
@@ -129,10 +134,11 @@ useEffect(()=>{
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, size, focused }) => (
-            <MaterialCommunityIcons 
-              name={focused ? "account" : "account-outline"} 
+            <UserIcon 
               size={size} 
-              color={color} 
+              color={color}
+              weight='duotone'
+              duotoneColor={colors.iconSecondary} 
             />
           ),
         }}
@@ -142,7 +148,7 @@ useEffect(()=>{
         ref={bottomSheetRef}
         index={1}
         snapPoints={snapPoints}
-        backgroundStyle={{ backgroundColor: colors.card,borderTopLeftRadius:width/2,borderTopRightRadius:width/2 }}
+        backgroundStyle={{ backgroundColor: colors.background,borderTopLeftRadius:width/2,borderTopRightRadius:width/2 }}
       >
         <BottomSheetView style={{flex:1,alignItems:"center",justifyContent:"center"}}>
         <View

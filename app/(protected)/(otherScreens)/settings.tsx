@@ -3,18 +3,19 @@ import React, { useState } from 'react'
 import { useTheme } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
-import { useHeaderHeight } from '@react-navigation/elements'
+import { useThemeColors } from '@/hooks/useThemeColor'
+import {GearIcon,PasswordIcon,UsersIcon,LightbulbIcon,SignOutIcon,MoonIcon,SunIcon, MailboxIcon,ArrowLeftIcon,PersonSimpleCircleIcon,PersonSimpleIcon } from 'phosphor-react-native'
+
 
 const Settings = () => {
   const {width}=Dimensions.get("window")
-  const { colors } = useTheme()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isLightMode, setIsLightMode] = useState(false)
   const [isDefaultMode, setIsDefaultMode] = useState(true)
-
+const colors = useThemeColors()
   const handleUpdateProfile = () => {
     // Implement profile update logic
     console.log('Updating profile...')
@@ -34,131 +35,131 @@ const Settings = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <View style={[styles.header, { backgroundColor: colors.card,height:width*0.25}]}>
+      <View style={[styles.header, { backgroundColor: colors.surface,height:width*0.25}]}>
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={colors.primary} />
+          <ArrowLeftIcon size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>Settings and Privacy</Text>
+        <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Settings and Privacy</Text>
       </View>
       <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Edit Profile Section */}
-        <View style={[styles.section,{backgroundColor:colors.background}]}>
+        <View style={[styles.section,{backgroundColor:colors.surface}]}>
           <View style={styles.sectionHeader}>
-            <Ionicons name="person-circle-outline" size={24} color={colors.primary} />
-            <Text style={[styles.sectionTitle, { color: colors.text, marginLeft: 8 }]}>Edit Profile</Text>
+            <PersonSimpleCircleIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary, marginLeft: 8 }]}>Edit Profile</Text>
           </View>
           
-          <View style={[styles.inputContainer,{borderColor:colors.primary}]}>
+          <View style={[styles.inputContainer,{borderColor:colors.border}]}>
             <View style={styles.inputLabelContainer}>
-              <Ionicons name="person-outline" size={20} color={colors.text} />
-              <Text style={[styles.label, { color: colors.text, marginLeft: 8 }]}>Username</Text>
+              <PersonSimpleIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.label, { color: colors.textPrimary, marginLeft: 8 }]}>Username</Text>
             </View>
             <TextInput
-              style={[styles.input, { backgroundColor: colors.card, color: colors.text }]}
+              style={[styles.input, { backgroundColor: colors.border, color: colors.textPrimary }]}
               value={username}
               onChangeText={setUsername}
               placeholder="Enter username"
-              placeholderTextColor={colors.text}
+              placeholderTextColor={colors.textSecondary}
             />
           </View>
 
-          <View style={[styles.inputContainer,{borderColor:colors.primary}]}>
+          <View style={[styles.inputContainer,{borderColor:colors.border}]}>
             <View style={styles.inputLabelContainer}>
-              <Ionicons name="mail-outline" size={20} color={colors.text} />
-              <Text style={[styles.label, { color: colors.text, marginLeft: 8 }]}>Email</Text>
+              <MailboxIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.label, { color: colors.textPrimary, marginLeft: 8 }]}>Email</Text>
             </View>
             <TextInput
-              style={[styles.input, { backgroundColor: colors.card, color: colors.text }]}
+              style={[styles.input, { backgroundColor: colors.border, color: colors.textPrimary }]}
               value={email}
               onChangeText={setEmail}
               placeholder="Enter email"
-              placeholderTextColor={colors.text}
+              placeholderTextColor={colors.textSecondary}
               keyboardType="email-address"
             />
           </View>
 
-          <View style={[styles.inputContainer,{borderColor:colors.primary}]}>
+          <View style={[styles.inputContainer,{borderColor:colors.border}]}>
             <View style={styles.inputLabelContainer}>
-              <Ionicons name="lock-closed-outline" size={20} color={colors.text} />
-              <Text style={[styles.label, { color: colors.text, marginLeft: 8 }]}>Password</Text>
+              <PasswordIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.label, { color: colors.textPrimary, marginLeft: 8 }]}>Password</Text>
             </View>
             <TextInput
-              style={[styles.input, { backgroundColor: colors.card, color: colors.text }]}
+              style={[styles.input, { backgroundColor: colors.border, color: colors.textPrimary }]}
               value={password}
               onChangeText={setPassword}
               placeholder="Enter new password"
-              placeholderTextColor={colors.text}
+              placeholderTextColor={colors.textSecondary}
               secureTextEntry
             />
           </View>
 
           <TouchableOpacity 
-            style={[styles.button, { backgroundColor:"transparent",borderWidth:1,borderColor:colors.primary}]}
+            style={[styles.button, { backgroundColor:"transparent",borderWidth:1,borderColor:colors.primaryButton}]}
             onPress={handleUpdateProfile}
           >
       
-            <Text style={[styles.buttonText,{color:colors.primary}]}>Update Profile</Text>
+            <Text style={[styles.buttonText,{color:colors.primaryButton}]}>Update Profile</Text>
           </TouchableOpacity>
         </View>
 
         {/* Themes Section */}
-        <View style={[styles.section,{backgroundColor:colors.background}]}>
+        <View style={[styles.section,{backgroundColor:colors.surface}]}>
           <View style={styles.sectionHeader}>
-            <Ionicons name="color-palette-outline" size={24} color={colors.primary} />
-            <Text style={[styles.sectionTitle, { color: colors.text, marginLeft: 8 }]}>Themes</Text>
+            <LightbulbIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary, marginLeft: 8 }]}>Themes</Text>
           </View>
           
           <View style={styles.themeOption}>
             <View style={styles.themeLabelContainer}>
-              <Ionicons name="moon-outline" size={20} color={colors.text} />
-              <Text style={[styles.themeLabel, { color: colors.text, marginLeft: 8 }]}>Dark Mode</Text>
+              <MoonIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Dark Mode</Text>
             </View>
             <Switch
               value={isDarkMode}
               onValueChange={() => handleThemeChange('dark')}
-              trackColor={{ false: colors.border, true: colors.primary }}
+              trackColor={{ false: colors.border, true: colors.primaryButton }}
             />
           </View>
 
           <View style={styles.themeOption}>
             <View style={styles.themeLabelContainer}>
-              <Ionicons name="sunny-outline" size={20} color={colors.text} />
-              <Text style={[styles.themeLabel, { color: colors.text, marginLeft: 8 }]}>Light Mode</Text>
+             <SunIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Light Mode</Text>
             </View>
             <Switch
               value={isLightMode}
               onValueChange={() => handleThemeChange('light')}
-              trackColor={{ false: colors.border, true: colors.primary }}
+              trackColor={{ false: colors.border, true: colors.primaryButton }}
             />
           </View>
 
           <View style={styles.themeOption}>
             <View style={styles.themeLabelContainer}>
-              <Ionicons name="settings-outline" size={20} color={colors.text} />
-              <Text style={[styles.themeLabel, { color: colors.text, marginLeft: 8 }]}>Default Mode</Text>
+              <GearIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+              <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Default Mode</Text>
             </View>
             <Switch
               value={isDefaultMode}
               onValueChange={() => handleThemeChange('default')}
-              trackColor={{ false: colors.border, true: colors.primary }}
+              trackColor={{ false: colors.border, true: colors.primaryButton }}
             />
           </View>
         </View>
 
         {/* Teams Section */}
-        <View style={[styles.section,{backgroundColor:colors.background}]}>
+        <View style={[styles.section,{backgroundColor:colors.surface}]}>
           <View style={styles.sectionHeader}>
-            <Ionicons name="people-outline" size={24} color={colors.primary} />
-            <Text style={[styles.sectionTitle, { color: colors.text, marginLeft: 8 }]}>Team</Text>
+           <UsersIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary, marginLeft: 8 }]}>Team</Text>
           </View>
           <TouchableOpacity 
-            style={[styles.button, { backgroundColor: "red" }]}
+            style={[styles.button, { backgroundColor: colors.dangerAccent }]}
             onPress={handleLeaveTeam}
           >
-            <Ionicons name="exit-outline" size={20} color="white" style={styles.buttonIcon} />
+            <SignOutIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
             <Text style={styles.buttonText}>Leave Team</Text>
           </TouchableOpacity>
         </View>

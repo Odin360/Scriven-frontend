@@ -29,8 +29,10 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
   const theme = useColorScheme();
   const isDark = theme === 'dark';
 
-  const activeColor = isDark?'#ffffff':'#444444';
-  const inactiveColor = isDark ? '#aaaaaa' : '#444444';
+  const activeColor =  isDark ? "#A368C2" : "#8E44AD";
+  const inactiveColor =  isDark ? "#757575" : "#BDBDBD";
+  const  background   =    isDark ? "#1E1E1E" : "#FFFFFF"
+
 
   useEffect(() => {
     translateX.value = withSpring(state.index * TAB_WIDTH, {
@@ -129,12 +131,7 @@ const CustomTabBar = ({ state, descriptors, navigation }:any) => {
 
   return (
     <View style={styles.wrapper}>
-      <BlurView
-        style={styles.absolute}
-        intensity={40}
-        tint={theme === 'dark' ? 'dark' : 'light'}
-      />
-      <View style={styles.container}>
+      <View style={[styles.container,{backgroundColor:isDark ? "#1E1E1E" : "#FFFFFF"}]}>
         <Animated.View style={[styles.indicator, indicatorStyle]} />
         {state.routes.map((route:any, index:any) => (
           <TabButton key={route.key} route={route} index={index} />
@@ -165,9 +162,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
+    opacity:0.7,
     height: '100%',
-    backgroundColor: 'transparent',
-    borderRadius: 40,
+        borderRadius: 40,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.2)',
