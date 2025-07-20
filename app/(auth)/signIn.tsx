@@ -5,8 +5,12 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {router, Stack} from "expo-router"
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
@@ -21,7 +25,9 @@ import { useAuthStore } from "@/store/useAuthStore";
 import axios from "axios";
 import { useUserStore } from "@/store/useUserStore";
 import CustomButton1 from "@/components/ui/CustomButtonOne";
-import Rive from "rive-react-native"
+import Rive,{Fit, RiveRef} from "rive-react-native"
+import { LinearGradient } from "expo-linear-gradient";
+import { useThemeColors } from "@/hooks/useThemeColor";
 
 
 const {width}=Dimensions.get("window")
@@ -42,47 +48,59 @@ const SignIn = () => {
   })
   const [hidePassword, setHidePassword] = useState(true);
 
+useEffect(()=>{
+  if(errors.email||errors.password){
+riveRef.current?.setInputState("State Machine 1","login_fail",true)}
+},[errors])
   const onSubmit =async({email,password}:{email:string,password:string})=>{
+    const emailToSend = email.toLowerCase();
     try{
-    await Axios.post(`${BASEURL}/auth/login`,{email:email.toLowerCase(),password:password})
+    await Axios.post(`${BASEURL}/auth/login`,{email:emailToSend,password:password})
 .then(
-  (response)=>setToken(response.data.token)
-  
-).then(async()=>await axios.post(`${BASEURL}/users/user`,{email:email},{headers:{'Authorization':`Bearer ${token}`}})
-).then(
+  async(response)=>{setToken(response.data.token)
+  return  await axios.post(`${BASEURL}/users/user`,{email:emailToSend},{headers:{'Authorization':`Bearer ${response.data.token}`}
+  }  
+)})
+.then(
   (response)=>{
     setUserId(response.data.id)
     setUserEmail(response.data.email)
 
     setUsername(response.data.username)
   }
-).
-then(
+).then(()=>riveRef.current?.setInputState("State Machine 1","login_success",true))
+.then(
   ()=>setSignedIn(true)
-).then(
+)
+.then(
   ()=>router.replace("/(protected)/(tabs)")
 )}
 catch(e){
-  console.log(e)
+  riveRef.current?.setInputState("State Machine 1","login_fail",true)
+  Alert.alert("Login Error","There was an error,try again")
 }
 }
-
+const colors = useThemeColors()
+const riveRef = useRef<RiveRef>(null)
   return (<>
   <Stack.Screen options={{headerShown:false}}/>
-  
-    <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+   <LinearGradient colors={[colors.gradientStart,colors.background]} style={{flex:1}}>
+ <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
+<ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+   
+    <View style={{flex:1,alignItems:"center"}}>
+      <View style={{height:width*0.7,width:width}}>
            <Rive
-      url="https://public.rive.app/community/runtime-files/19399-36451-logininteraction.riv"
-      artboardName="Avatar 1"
-      stateMachineName="avatar"
-      style={{width: width*0.7, height: width*0.7}}
+           ref={riveRef}
+         resourceName="login_interaction"
+      fit={Fit.Fill}
   />
+  </View>
             <View
               style={{
-                marginTop: spaces,
+  
                 padding: 10,
-                margin: 10,
-                backgroundColor: "rgba(0,0,0,0.1)",
+                  backgroundColor: "rgba(0,0,0,0.1)",
                 borderRadius: 18,
                 alignItems:"center",
                 justifyContent:"center"
@@ -186,6 +204,8 @@ catch(e){
                   value={value}
                   keyboardType="email-address"
                   style={{flex:1}}
+                  onFocus={()=>riveRef.current?.setInputState("State Machine 1","isFocus",true)}
+                  onBlur={()=>riveRef.current?.setInputState("State Machine 1","isFocus",false)}
                   onChangeText={onChange}
                   placeholderTextColor="#C7DODB"
                 />
@@ -217,6 +237,8 @@ catch(e){
                   value={value}
                   autoCorrect={false}
                   style={{flex:1,padding:10}}
+                  onFocus={()=>riveRef.current?.setInputState("State Machine 1","IsPassword",true)}
+                  onBlur={()=>riveRef.current?.setInputState("State Machine 1","IsPassword",false)}
                   onChangeText={onChange}
                   placeholderTextColor="#C7DODB"
                   secureTextEntry={hidePassword}
@@ -254,7 +276,7 @@ catch(e){
               label="Sign In"
               width={250}
               height={55}
-              style={{marginBottom:10}}
+              style={{marginBottom:20}}
               textStyle={{fontSize:18}}
                  onPress={handleSubmit(onSubmit)}
              />
@@ -273,6 +295,9 @@ catch(e){
               {/** */}
             </View>
            </View>
+           </ScrollView>
+           </KeyboardAvoidingView>
+           </LinearGradient>
             </>
     
   );

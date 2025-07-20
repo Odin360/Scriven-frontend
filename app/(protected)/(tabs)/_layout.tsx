@@ -1,21 +1,10 @@
 import { Tabs } from 'expo-router';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Platform, View,Text, Dimensions, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import BlurTabBarBackground from '@/components/ui/TabBarBackground.ios';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { useTheme } from '@react-navigation/native';
-import ChatProvider from '@/providers/ChatProvider';
 import CustomTabBar from '@/components/ui/CustomTabBar';
 import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
-import {IconProps, MicrophoneIcon, ChatCircleIcon,ChartPieSliceIcon,UserIcon,BezierCurveIcon, PlusCircleIcon} from "phosphor-react-native" 
+import {IconProps, MicrophoneIcon, ChatCircleIcon,ChartPieSliceIcon,UserIcon,BezierCurveIcon,  PlusIcon} from "phosphor-react-native" 
 import tools from '@/Utils/tools';
 import ConvAiDOMComponent from '@/components/ConvAI';
 import { useSpeechRecognition } from '@/components/SpeechRecognition';
@@ -29,13 +18,13 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const colors  = useThemeColors();
   const{handleStart,handleStop,recognizing,transcript,setTranscript}=useSpeechRecognition()
-// 👇 BottomSheetModal ref
+
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  // 👇 Define snap points
+  
   const snapPoints = useMemo(() => ['25%'], []);
 
-  // 👇 Function to show the modal
+  
   const openModal = () => {
     bottomSheetRef.current?.present();
   };
@@ -103,7 +92,7 @@ useEffect(()=>{
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
             }}>
-              <PlusCircleIcon  size={32} color="white" weight="duotone" duotoneColor={colors.iconSecondary}/>
+              <PlusIcon  size={32} color="white" weight="duotone" duotoneColor={colors.iconSecondary}/>
             </View>
           ),
         }}

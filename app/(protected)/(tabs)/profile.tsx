@@ -15,6 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useThemeColors } from '@/hooks/useThemeColor';
 import { CaretRightIcon, GearIcon, GreaterThanIcon, HeadCircuitIcon, QrCodeIcon, WalletIcon } from 'phosphor-react-native';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const { width } = Dimensions.get("window");
 
@@ -39,7 +40,7 @@ const Profile = () => {
     opacity: fadeAnim.value,
     transform: [{ scale: scaleAnim.value }],
   }));
-
+const setToken = useAuthStore(state=>state.setToken)
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ dark: colors.background, light: colors.background }}
@@ -119,6 +120,10 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
+        onPress={()=>{
+          setToken(null)
+          router.replace("/(auth)/signIn")
+        }}
           style={[styles.logoutButton, { backgroundColor: colors.dangerAccent }]}
           activeOpacity={0.8}
         >

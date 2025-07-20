@@ -29,6 +29,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { useAuthStore } from '@/store/useAuthStore';
 import Axios from 'axios'
 import { BASEURL } from '@/constants/Api';
+import { useThemeColors } from '@/hooks/useThemeColor';
 
 
 const ResetPassword = () => {
@@ -53,11 +54,11 @@ const onSubmit =async(data:any)=>{
   console.log(e)
  }
 }
- 
+ const colors = useThemeColors()
 
   return (<>
          <Stack.Screen options={{headerShown:false}}/>  
-    <LinearGradient colors={Colors.light.gradientBackground} style={styles.gradient}>
+    <LinearGradient colors={[colors.gradientStart,colors.background]} style={styles.gradient}>
       <SafeAreaView style={styles.safeArea}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView
@@ -65,7 +66,7 @@ const onSubmit =async(data:any)=>{
             style={styles.container}
           >
             <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-              <AntDesign name="arrowleft" size={24} color="black" />
+              <AntDesign name="arrowleft" size={24} color={colors.iconColor} />
             </TouchableOpacity>
 
             <View style={styles.rectangles}>
@@ -74,7 +75,7 @@ const onSubmit =async(data:any)=>{
               <View style={[styles.rectangle,styles.activeRectangle]} />
             </View>
 
-            <Text style={[Texts.default,{color:"white",textAlign:"center",marginBottom:spaces}]}>
+            <Text style={[Texts.default,{color:colors.textPrimary,textAlign:"center",marginBottom:spaces}]}>
               Enter your new password in order to reset your password 
             </Text>
 

@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: TAB_WIDTH - 16,
     height: 48,
-    backgroundColor:'rgba(142, 68, 173, 0.15)', //'rgba(255,255,255,0.15)',
+    backgroundColor:"#FFD6CF", 
     borderRadius: 24,
     left: 8,
     transform: [{ translateY: -24 }],

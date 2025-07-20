@@ -4,7 +4,6 @@ import OtpBox from '@/components/OtpBox'
 import CurrentScreenIndicator from '@/components/ui/CurrentScreenIndicator'
 import { LinearGradient } from 'expo-linear-gradient';
 import { ButtonStyle, Texts } from '@/constants/Components'; 
-import { Colors } from '@/constants/Colors';
 import { router, Stack } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -12,12 +11,14 @@ import  Axios from 'axios';
 import { BASEURL } from '@/constants/Api';
 import { usePreviousNavigationName } from '@/hooks/usePreviousRouteName';
 import { useUserStore } from '@/store/useUserStore';
+import { useThemeColors } from '@/hooks/useThemeColor';
 
 
 const {width}=Dimensions.get("window")
 const margin = width *0.15
 
 const OtpVerify = () => {
+  const colors= useThemeColors()
   const email = useAuthStore(state=>state.email)
   const password =useAuthStore(state=>state.password)
   const setSignedIn = useAuthStore(state=>state.setSignedIn)
@@ -45,8 +46,9 @@ await Axios.post(`${BASEURL}/auth/verifyUser`,{
 }).then(
   async()=>await Axios.post(`${BASEURL}/auth/login`,{email:email,password:password})
 ).then(
-  (response)=>setToken(response.data.token)
-).then(async()=>await Axios.post(`${BASEURL}/users/user`,{email:email},{headers:{'Authorization':`Bearer ${token}`}})
+ async (response)=>{setToken(response.data.token)
+   return await Axios.post(`${BASEURL}/users/user`,{email:email},{headers:{'Authorization':`Bearer ${response.data.token}`}})
+  }
 ).then(
   (response)=>{
     setUserId(response.data.id)
@@ -97,17 +99,17 @@ catch(e){
   
   return (<>
   <Stack.Screen options={{headerShown:false}}/>
-    <LinearGradient style={{flex:1,padding:width*0.08}} colors={Colors.light.gradientBackground}>
-      <Ionicons name="arrow-back" size={24} color="black" onPress={()=>router.back()} style={{marginTop:width*0.08}}/>
+    <LinearGradient style={{flex:1,padding:width*0.08}} colors={[colors.gradientStart,colors.background]}>
+      <Ionicons name="arrow-back" size={24} color={colors.iconColor} onPress={()=>router.back()} style={{marginTop:width*0.08}}/>
       <View style={{justifyContent:"center",flexDirection:"row",gap:10,marginBottom:margin}}>
     <CurrentScreenIndicator color="white"/>
-    <CurrentScreenIndicator color={Colors.light.primaryColor}/>
+    <CurrentScreenIndicator color={colors.primaryButton}/>
     <CurrentScreenIndicator color="white"/>
       </View>
       <Text  style={[{alignSelf:"center",
         textAlign:"center",
         marginBottom:width*0.08,
-        color:Colors.light.secondaryTextColor},
+        color:colors.textPrimary},
         Texts.default]}>
         Enter the Otp we just sent 
         to your email for verification
@@ -129,15 +131,15 @@ catch(e){
     </View>
  <View style={{flexDirection:'row',gap:5,marginTop:width*0.08}}>   
 <Text style={[Texts.default,
-  {color:Colors.light.secondaryTextColor}]}>
+  {color:colors.textSecondary}]}>
   Didn't get OTP?
   </Text>
 {counter===0&&<TouchableOpacity onPress={resendOtp}>
   <Text style={[Texts.default,
-    {color:Colors.light.primaryColor}]}>Resend OTP</Text>
+    {color:colors.textPrimary}]}>Resend OTP</Text>
   </TouchableOpacity>}
   {counter>0&&<Text style={[Texts.default,
-      {color:Colors.light.primaryTextColor}]}>0:{counter>9?counter:<Text>0{counter}</Text>}</Text>}
+      {color:colors.textPrimary}]}>0:{counter>9?counter:<Text>0{counter}</Text>}</Text>}
   </View>
     </LinearGradient>
     </>

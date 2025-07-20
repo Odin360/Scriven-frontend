@@ -10,7 +10,7 @@ import {
   Dimensions,
   useColorScheme,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {router, Stack} from "expo-router"
 import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -23,6 +23,10 @@ import { Controller, useForm } from "react-hook-form";
 import Axios from "axios";
 import { BASEURL } from "@/constants/Api";
 import { useAuthStore } from "@/store/useAuthStore";
+import Rive, { Fit, RiveRef } from "rive-react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useThemeColors } from "@/hooks/useThemeColor";
+import CustomButton1 from "@/components/ui/CustomButtonOne";
 
 const {width}=Dimensions.get("window")
 const spaces = width*0.08
@@ -31,6 +35,8 @@ const spaces = width*0.08
 const SignUp = () => {
     const setPassword =useAuthStore((state)=>state.setPassword)
     const setEmail = useAuthStore((state)=>state.setEmail)
+
+    
 const onSubmit =async (data:any)=>{
   try{
   await Axios.post(`${BASEURL}/auth/signUp`,{
@@ -49,21 +55,32 @@ console.log(e)
  const {control,handleSubmit,formState:{errors}}=useForm({
     resolver:zodResolver(SignUpSchema)
 })
- 
-  const [hidePassword, setHidePassword] = useState(true);
-  
 
+    useEffect(()=>{
+      if(errors.email||errors.password||errors.username){
+    riveRef.current?.setInputState("State Machine 1","login_fail",true)}
+    },[errors])
+
+  const [hidePassword, setHidePassword] = useState(true);
+  const colors =useThemeColors()
+const riveRef = useRef<RiveRef>(null)
   return (<>
   <Stack.Screen options={{headerShown:false}}/>
-  
-    <ParallaxScrollView 
-    headerBackgroundColor={{dark:"white",light:"white"}}
-    headerImage={<Image source={require("@/assets/images/image.jpg")} style={{height:width,width:width}}/>}>
+<LinearGradient colors={[colors.gradientStart,colors.background]} style={{flex:1}}> 
+     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
+<ScrollView showsVerticalScrollIndicator={false} style={{flex:1}}>
+          <View style={{height:width*0.7,width:width}}>
+             <Rive
+             ref={riveRef}
+           resourceName="login_interaction"
+        fit={Fit.Fill}
+    />
+    </View>
             <View
               style={{
-                marginTop: spaces,
+            
                 padding: 10,
-                margin: 10,
+            
                 backgroundColor: "rgba(0,0,0,0.1)",
                 borderRadius: 18,
                 alignItems:"center",
@@ -156,12 +173,15 @@ console.log(e)
                 style={{
                   backgroundColor: "white",
                   borderRadius: 10,
+                  height:width*0.12,
                   padding: 5,
                   marginBottom: 15,
                   width:"100%"
                 }}
               >
                 <TextInput
+                onFocus={()=>riveRef.current?.setInputState("State Machine 1","isFocus",true)}
+                  onBlur={()=>riveRef.current?.setInputState("State Machine 1","isFocus",false)}  
                   placeholder="Username"
                   style={{flex:1}}
                   value={value}
@@ -185,6 +205,7 @@ console.log(e)
                   backgroundColor: "white",
                   borderRadius: 10,
                   padding: 5,
+                  height:width*0.12,
                   marginBottom: 15,
                   width:"100%"
                 }}
@@ -192,6 +213,8 @@ console.log(e)
                 <TextInput
                   placeholder="Email"
                   value={value}
+                  onFocus={()=>riveRef.current?.setInputState("State Machine 1","isFocus",true)}
+                  onBlur={()=>riveRef.current?.setInputState("State Machine 1","isFocus",false)}
                   keyboardType="email-address"
                   style={{flex:1}}
                   onChangeText={onChange}
@@ -211,6 +234,7 @@ console.log(e)
                   backgroundColor: "white",
                   borderRadius: 10,
                   padding: 5,
+                  height:width*0.12,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   marginBottom: 10,
@@ -220,6 +244,8 @@ console.log(e)
               >
                 <TextInput
                   placeholder="Password"
+                     onFocus={()=>riveRef.current?.setInputState("State Machine 1","IsPassword",true)}
+                  onBlur={()=>riveRef.current?.setInputState("State Machine 1","IsPassword",false)}  
                   value={value}
                   autoCorrect={false}
                   style={{flex:1,padding:10}}
@@ -258,16 +284,14 @@ console.log(e)
               {/** */}
 
               {/** */}
-              <TouchableOpacity
-              onPress={handleSubmit(onSubmit,(formErrors)=>{
-                console.log(formErrors)
-              })}
-                style={[ButtonStyle,{marginBottom:spaces}]}
-              >
-                <Text style={Texts.buttonText}>
-                  Create Account
-                </Text>
-              </TouchableOpacity>
+             <CustomButton1
+                           label="Create Account"
+                           width={250}
+                           height={55}
+                           style={{marginBottom:20}}
+                           textStyle={{fontSize:18}}
+                              onPress={handleSubmit(onSubmit)}
+                          />
               {/** */}
 
               {/** */}
@@ -281,7 +305,10 @@ console.log(e)
 
               {/** */}
             </View>
-          </ParallaxScrollView>
+            </ScrollView>
+            </KeyboardAvoidingView>
+          </LinearGradient>
+
             </>
     
   );
