@@ -4,11 +4,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
   Dimensions,
-  useColorScheme,
 } from "react-native";
 import React, { useState } from "react";
 import {router, Stack} from "expo-router"
@@ -24,7 +20,8 @@ import { BASEURL } from "@/constants/Api";
 import { useAuthStore } from "@/store/useAuthStore";
 import axios from "axios";
 import { useUserStore } from "@/store/useUserStore";
-
+import CustomButton1 from "@/components/ui/CustomButtonOne";
+import Rive from "rive-react-native"
 
 
 const {width}=Dimensions.get("window")
@@ -45,13 +42,13 @@ const SignIn = () => {
   })
   const [hidePassword, setHidePassword] = useState(true);
 
-  const onSubmit =async(data:any)=>{
+  const onSubmit =async({email,password}:{email:string,password:string})=>{
     try{
-    await Axios.post(`${BASEURL}/auth/login`,{email:data.email,password:data.password})
+    await Axios.post(`${BASEURL}/auth/login`,{email:email.toLowerCase(),password:password})
 .then(
   (response)=>setToken(response.data.token)
   
-).then(async()=>await axios.post(`${BASEURL}/users/user`,{email:data.email},{headers:{'Authorization':`Bearer ${token}`}})
+).then(async()=>await axios.post(`${BASEURL}/users/user`,{email:email},{headers:{'Authorization':`Bearer ${token}`}})
 ).then(
   (response)=>{
     setUserId(response.data.id)
@@ -73,9 +70,13 @@ catch(e){
   return (<>
   <Stack.Screen options={{headerShown:false}}/>
   
-    <ParallaxScrollView 
-    headerBackgroundColor={{dark:"white",light:"white"}}
-    headerImage={<Image source={require("@/assets/images/image.jpg")} style={{height:width,width:width}}/>}>
+    <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+           <Rive
+      url="https://public.rive.app/community/runtime-files/19399-36451-logininteraction.riv"
+      artboardName="Avatar 1"
+      stateMachineName="avatar"
+      style={{width: width*0.7, height: width*0.7}}
+  />
             <View
               style={{
                 marginTop: spaces,
@@ -175,8 +176,9 @@ catch(e){
                   backgroundColor: "white",
                   borderRadius: 10,
                   padding: 5,
+                  height:width*0.12,
                   marginBottom: 15,
-                  width:"100%"
+                  width:width*0.9
                 }}
               >
                 <TextInput
@@ -201,11 +203,13 @@ catch(e){
                   backgroundColor: "white",
                   borderRadius: 10,
                   padding: 5,
+                  height:width*0.12,
+                  marginBottom: 15,
+                  width:width*0.9,
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  marginBottom: 10,
                   alignItems:"center",
-                  width:"100%"
+    
                 }}
               >
                 <TextInput
@@ -233,7 +237,7 @@ catch(e){
 
               </View>)}/>
               {errors.password&&<Text style={Texts.error}>❗ {errors.password.message}</Text>}
-              <TouchableOpacity style={{marginLeft:"auto",marginBottom:spaces}} onPress={()=>router.push("/(auth)/forgotPassword")}>
+              <TouchableOpacity style={{marginLeft:"auto",marginBottom:10}} onPress={()=>router.push("/(auth)/forgotPassword")}>
               <Text style={[Texts.default,{color:"blue"}]}>
                 Forgot Password?
               </Text>
@@ -246,14 +250,15 @@ catch(e){
               {/** */}
 
               {/** */}
-              <TouchableOpacity
-                style={[ButtonStyle,{marginBottom:spaces}]}
+              <CustomButton1
+              label="Sign In"
+              width={250}
+              height={55}
+              style={{marginBottom:10}}
+              textStyle={{fontSize:18}}
                  onPress={handleSubmit(onSubmit)}
-              >
-                <Text style={Texts.buttonText}>
-                  Sign In
-                </Text>
-              </TouchableOpacity>
+             />
+                
               {/** */}
 
               {/** */}
@@ -267,7 +272,7 @@ catch(e){
 
               {/** */}
             </View>
-          </ParallaxScrollView>
+           </View>
             </>
     
   );

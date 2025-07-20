@@ -57,7 +57,7 @@ export const Colors : appTheme = {
   dangerAccent:      "#E74C3C",  // Coral Red – Delete, warnings
 
   // Icons (Phosphor duotone)
-  iconColor:         "#8E44AD",  // Primary stroke color
+  iconColor:        "#8E44AD",  // Primary stroke color
   iconSecondary:     "#D5B4E5",  // Lilac Mist – Tint for duotone fill
 
   // Gradients (e.g. top app bars or onboarding)

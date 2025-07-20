@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { useThemeColors } from '@/hooks/useThemeColor'
 import {GearIcon,PasswordIcon,UsersIcon,LightbulbIcon,SignOutIcon,MoonIcon,SunIcon, MailboxIcon,ArrowLeftIcon,PersonSimpleCircleIcon,PersonSimpleIcon } from 'phosphor-react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 const Settings = () => {
@@ -35,7 +36,7 @@ const colors = useThemeColors()
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <View style={[styles.header, { backgroundColor: colors.surface,height:width*0.25}]}>
+      <LinearGradient colors={[colors.gradientStart,colors.gradientMiddle,colors.background]} style={[styles.header, {height:width*0.25}]}>
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => router.back()}
@@ -43,7 +44,7 @@ const colors = useThemeColors()
           <ArrowLeftIcon size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Settings and Privacy</Text>
-      </View>
+      </LinearGradient>
       <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Edit Profile Section */}
         <View style={[styles.section,{backgroundColor:colors.surface}]}>

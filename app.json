@@ -47,6 +47,11 @@
           "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
           "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
         }
+      ], [
+        "expo-asset",
+        {
+          "assets": ["./assets/animations/login_interaction.riv"]
+        }
       ],
        ["@stream-io/video-react-native-sdk",{
         "enableScreenshare": true

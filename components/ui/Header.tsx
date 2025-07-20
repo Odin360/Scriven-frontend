@@ -3,6 +3,8 @@ import Animated, { Extrapolation, interpolate, SharedValue, useAnimatedStyle, wi
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { useThemeColors } from "@/hooks/useThemeColor";
 
 interface headerProps {
     headerHeight: number,
@@ -10,7 +12,6 @@ interface headerProps {
 }
 
 export default function Header({ headerHeight, scrollY }: headerProps) {
-    const { colors } = useTheme();
     const halfHeaderHeight = headerHeight / 2;
     const quarterHeaderHeight = halfHeaderHeight / 2;
 
@@ -41,46 +42,49 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
                 Extrapolation.CLAMP)
         }]
     }));
+    const colors = useThemeColors()
 
     return (
         <Animated.View style={[styles.headerStyle, headerStyle, { backgroundColor: colors.background }]}>
+            <LinearGradient colors={[colors.gradientStart,colors.gradientMiddle,colors.background]}>
             <Animated.View style={[styles.meetingSection, meetingSectionStyle]}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Meetings</Text>
+                <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Meetings</Text>
                 <View style={styles.meetingIcons}>
                     <TouchableOpacity style={styles.meetingIconButton} onPress={()=>router.push("/createCall")}>
-                        <Ionicons name="videocam" size={24} color={colors.primary} />
-                        <Text style={[styles.iconText, { color: colors.text }]}>Start</Text>
+                        <Ionicons name="videocam" size={24} color={colors.iconColor} />
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Start</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.meetingIconButton} onPress={()=>router.push("/joinCall")}>
-                        <Ionicons name="enter" size={24} color={colors.primary} />
-                        <Text style={[styles.iconText, { color: colors.text }]}>Join</Text>
+                        <Ionicons name="enter" size={24} color={colors.iconColor} />
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Join</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.meetingIconButton}>
-                        <Ionicons name="calendar" size={24} color={colors.primary} />
-                        <Text style={[styles.iconText, { color: colors.text }]}>Schedule</Text>
+                        <Ionicons name="calendar" size={24} color={colors.iconColor} />
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Schedule</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.meetingIconButton}>
-                        <Ionicons name="flash" size={24} color={colors.primary} />
-                        <Text style={[styles.iconText, { color: colors.text }]}>Flash</Text>
+                        <Ionicons name="flash" size={24} color={colors.iconColor} />
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Flash</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.meetingIconButton}>
-                        <Ionicons name="radio" size={24} color={colors.primary} />
-                        <Text style={[styles.iconText, { color: colors.text }]}>Live</Text>
+                        <Ionicons name="radio" size={24} color={colors.iconColor} />
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Live</Text>
                     </TouchableOpacity>
                 </View>
             </Animated.View>
 
             <Animated.View style={[styles.subHeader,subHeaderStyle]}>
-                <Text style={[styles.subHeaderText, { color: colors.text }]}>Conversations</Text>
+                <Text style={[styles.subHeaderText, { color: colors.textPrimary }]}>Conversations</Text>
                 <View style={styles.subHeaderIcons}>
                     <TouchableOpacity style={styles.iconButton} onPress={()=>router.push("/(protected)/(otherScreens)/teamMembers")}>
-                        <FontAwesome5 name="teamspeak" size={24} color={colors.primary} />
+                        <FontAwesome5 name="teamspeak" size={24} color={colors.iconColor} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Ionicons name="notifications" size={24} color={colors.primary} />
+                        <Ionicons name="notifications" size={24} color={colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
             </Animated.View>
+            </LinearGradient>
         </Animated.View>
     )
 }

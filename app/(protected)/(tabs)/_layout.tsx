@@ -15,7 +15,7 @@ import { useTheme } from '@react-navigation/native';
 import ChatProvider from '@/providers/ChatProvider';
 import CustomTabBar from '@/components/ui/CustomTabBar';
 import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
-import {IconProps, MicrophoneIcon, ChatCircleIcon,ChartPieSliceIcon,UserIcon,BezierCurveIcon} from "phosphor-react-native" 
+import {IconProps, MicrophoneIcon, ChatCircleIcon,ChartPieSliceIcon,UserIcon,BezierCurveIcon, PlusCircleIcon} from "phosphor-react-native" 
 import tools from '@/Utils/tools';
 import ConvAiDOMComponent from '@/components/ConvAI';
 import { useSpeechRecognition } from '@/components/SpeechRecognition';
@@ -64,7 +64,7 @@ useEffect(()=>{
           title: 'Chat',
           tabBarIcon: ({ color, size, focused }) => (
             <ChatCircleIcon  
-              size={size} 
+              size={32} 
               color={color}
               weight="duotone"
               duotoneColor={colors.iconSecondary} 
@@ -78,7 +78,7 @@ useEffect(()=>{
           title: 'Workspace',
           tabBarIcon: ({ color, size, focused }) => (
             <ChartPieSliceIcon 
-              size={size} 
+              size={32} 
               weight="duotone"
               duotoneColor={colors.iconSecondary}
               color={color} 
@@ -103,7 +103,7 @@ useEffect(()=>{
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
             }}>
-              <MicrophoneIcon  size={30} color="white" weight="duotone" duotoneColor={colors.iconSecondary}/>
+              <PlusCircleIcon  size={32} color="white" weight="duotone" duotoneColor={colors.iconSecondary}/>
             </View>
           ),
         }}
@@ -121,7 +121,7 @@ useEffect(()=>{
           title: 'Team',
           tabBarIcon: ({ color, size, focused }) => (
             <BezierCurveIcon  
-              size={size} 
+              size={32} 
               color={color} 
               weight='duotone'
               duotoneColor={colors.iconSecondary}
@@ -135,7 +135,7 @@ useEffect(()=>{
           title: 'Profile',
           tabBarIcon: ({ color, size, focused }) => (
             <UserIcon 
-              size={size} 
+              size={32} 
               color={color}
               weight='duotone'
               duotoneColor={colors.iconSecondary} 

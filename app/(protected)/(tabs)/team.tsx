@@ -16,6 +16,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router } from 'expo-router';
 import { useThemeColors } from '@/hooks/useThemeColor';
 import { CaretRightIcon, QrCodeIcon, UsersIcon, UsersThreeIcon } from 'phosphor-react-native';
+import ScreenHeader from '@/components/ui/ScreenHeaders';
 
 const uuid = '123e4567-e89b-12d3-a456-426614174000';
 const { width } = Dimensions.get('window');
@@ -39,10 +40,7 @@ const Team = () => {
 
   return (
     <>
-      <LinearGradient style={{ height: width * 0.3 }}
-      start={{x:0,y:0}}
-      end={{x:1,y:0}}
-       colors={[colors.gradientStart, colors.gradientMiddle,colors.gradientEnd]} />
+     <ScreenHeader/>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Permission message */}
         {permission && !permission.granted && (

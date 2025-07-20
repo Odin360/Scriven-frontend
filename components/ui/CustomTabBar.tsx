@@ -18,16 +18,20 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 import { useEffect } from 'react';
+import { useThemeColors } from '@/hooks/useThemeColor';
 
 const { width } = Dimensions.get('window');
 const TAB_COUNT = 5;
 const TAB_WIDTH = (width - 32) / TAB_COUNT;
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
+
 const CustomTabBar = ({ state, descriptors, navigation }:any) => {
   const translateX = useSharedValue(0);
   const theme = useColorScheme();
   const isDark = theme === 'dark';
+const colors = useThemeColors()
+
 
   const activeColor =  isDark ? "#A368C2" : "#8E44AD";
   const inactiveColor =  isDark ? "#757575" : "#BDBDBD";
@@ -162,7 +166,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    opacity:0.7,
+    opacity:1,
     height: '100%',
         borderRadius: 40,
     overflow: 'hidden',
@@ -174,7 +178,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: TAB_WIDTH - 16,
     height: 48,
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor:'rgba(142, 68, 173, 0.15)', //'rgba(255,255,255,0.15)',
     borderRadius: 24,
     left: 8,
     transform: [{ translateY: -24 }],
@@ -191,15 +195,15 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   centerTab: {
+    backgroundColor:'#8E44AD',
     marginTop: -20,
-    backgroundColor: '#007aff',
     borderRadius: 30,
     width: 60,
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
-    shadowColor: '#007aff',
+    shadowColor: '#8E44AD',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
@@ -212,7 +216,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -6,
     right: -10,
-    backgroundColor: 'red',
+    backgroundColor: 'green',
     borderRadius: 10,
     minWidth: 16,
     paddingHorizontal: 4,

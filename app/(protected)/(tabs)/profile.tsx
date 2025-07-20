@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
     alignSelf: "center",
     borderRadius: 18,
-    opacity: 0.9,
+    opacity: 1,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
