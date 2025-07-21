@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import Animated, { Extrapolation, interpolate, SharedValue, useAnimatedStyle, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { Extrapolation, interpolate, SharedValue, useAnimatedStyle, withTiming} from "react-native-reanimated";
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import { router } from "expo-router";
@@ -10,28 +10,29 @@ interface headerProps {
     headerHeight: number,
     scrollY: SharedValue<number>
 }
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 export default function Header({ headerHeight, scrollY }: headerProps) {
     const halfHeaderHeight = headerHeight / 2;
     const quarterHeaderHeight = halfHeaderHeight / 2;
 
     const headerStyle = useAnimatedStyle(() => ({
-        height: interpolate(scrollY.value,
+        height: withTiming(interpolate(scrollY.value,
             [0, headerHeight],
             [headerHeight, halfHeaderHeight],
-            Extrapolation.CLAMP)
+            Extrapolation.CLAMP))
     }));
 
     const meetingSectionStyle = useAnimatedStyle(() => ({
-        opacity: interpolate(scrollY.value,
+        opacity: withTiming(interpolate(scrollY.value,
             [0, headerHeight / 2],
             [1, 0],
-            Extrapolation.CLAMP),
+            Extrapolation.CLAMP)),
         transform: [{
-            translateY: interpolate(scrollY.value,
+            translateY: withTiming(interpolate(scrollY.value,
                 [0, headerHeight / 2],
                 [0, -20],
-                Extrapolation.CLAMP)
+                Extrapolation.CLAMP))
         }]
     }));
     const subHeaderStyle = useAnimatedStyle(() => ({
@@ -46,7 +47,7 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
 
     return (
         <Animated.View style={[styles.headerStyle, headerStyle, { backgroundColor: colors.background }]}>
-            <LinearGradient colors={[colors.gradientStart,colors.gradientMiddle,colors.background]}>
+            <AnimatedLinearGradient  style={[{ width: '100%' }, headerStyle]} colors={[colors.gradientStart,colors.gradientMiddle,colors.background]}>
             <Animated.View style={[styles.meetingSection, meetingSectionStyle]}>
                 <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Meetings</Text>
                 <View style={styles.meetingIcons}>
@@ -84,7 +85,7 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
                     </TouchableOpacity>
                 </View>
             </Animated.View>
-            </LinearGradient>
+            </AnimatedLinearGradient>
         </Animated.View>
     )
 }

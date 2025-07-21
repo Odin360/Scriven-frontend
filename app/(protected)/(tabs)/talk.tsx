@@ -10,6 +10,8 @@ import Animated, { useAnimatedStyle, withTiming, interpolate, Extrapolate, runOn
 import { ScrollView } from 'react-native-gesture-handler';
 import { useUserStore } from '@/store/useUserStore';
 import { useTeamStore } from '@/store/useTeamStore';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useThemeColors } from '@/hooks/useThemeColor';
 
 const headerHeight = 160;
 
@@ -36,9 +38,9 @@ const AnimatedTabBar = ({ activeTab, setActiveTab, tabLayouts, underlineX, under
     width: underlineWidth.value,
     transform: [{ translateX: underlineX.value }],
   }));
-
+const colors=useThemeColors()
   return (
-    <View style={styles.tabBarContainer}>
+    <LinearGradient start={{x:0,y:0}} end={{x:1,y:1}} colors={[colors.background,colors.gradientEnd,colors.background]} style={styles.tabBarContainer}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -64,16 +66,16 @@ const AnimatedTabBar = ({ activeTab, setActiveTab, tabLayouts, underlineX, under
               style={styles.tabButton}
             >
               <Animated.View style={animatedStyle}>
-                <Text style={[styles.tabLabel, isActive ? styles.activeTabLabel : styles.inactiveTabLabel]}>
+                <Text style={[styles.tabLabel, isActive ? styles.activeTabLabel : styles.inactiveTabLabel,isActive ? {color:colors.textPrimary} : styles.inactiveTabLabel]}>
                   {tab.label}
                 </Text>
               </Animated.View>
             </TouchableOpacity>
           );
         })}
-        <Animated.View style={[styles.tabIndicator, animatedIndicatorStyle]} />
+        <Animated.View style={[styles.tabIndicator,{backgroundColor:colors.textPrimary}, animatedIndicatorStyle]} />
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -131,6 +133,7 @@ const MessagesScreen = () => {
         />
         <ChannelList
           additionalFlatListProps={{
+            showsVerticalScrollIndicator:false,
             onScroll: (event) => {
               scrollY.value = event.nativeEvent.contentOffset.y;
             },
@@ -160,9 +163,6 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     height: TAB_BAR_HEIGHT,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderColor: '#eee',
     justifyContent: 'center',
   },
   scrollViewContent: {
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   activeTabLabel: {
     fontWeight: '700',
-    color: '#222',
+   // color: '#222',
   },
   inactiveTabLabel: {
     fontWeight: '500',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     height: TAB_UNDERLINE_HEIGHT,
-    backgroundColor: '#222',
+    //backgroundColor: '#222',
     borderRadius: 2,
   },
 });
