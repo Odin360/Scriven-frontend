@@ -47,7 +47,7 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
 
     return (
         <Animated.View style={[styles.headerStyle, headerStyle, { backgroundColor: colors.background }]}>
-            <AnimatedLinearGradient  style={[{ width: '100%' }, headerStyle]} colors={[colors.gradientStart,colors.gradientMiddle,colors.background]}>
+            <AnimatedLinearGradient  style={[{ width: '100%',paddingTop:20 }, headerStyle]} colors={[colors.gradientStart,colors.gradientMiddle,colors.background]}>
             <Animated.View style={[styles.meetingSection, meetingSectionStyle]}>
                 <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Meetings</Text>
                 <View style={styles.meetingIcons}>

@@ -10,6 +10,10 @@ import ConvAiDOMComponent from '@/components/ConvAI';
 import { useSpeechRecognition } from '@/components/SpeechRecognition';
 import * as Speech from "expo-speech"
 import { useThemeColors } from '@/hooks/useThemeColor';
+import axios from 'axios';
+import { BASEURL } from '@/constants/Api';
+import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '@/store/useUserStore';
 
 
 
@@ -20,7 +24,9 @@ export default function TabLayout() {
   const{handleStart,handleStop,recognizing,transcript,setTranscript}=useSpeechRecognition()
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-
+  const token = useAuthStore(state=>state.token)
+  const userId = useUserStore(state=>state.id)
+  const [speaking,setSpeaking]=useState(false)
   
   const snapPoints = useMemo(() => ['25%'], []);
 
@@ -30,10 +36,17 @@ export default function TabLayout() {
   };
   const {width} = Dimensions.get("window")
 useEffect(()=>{
+  const speak=async()=>{
   if(!recognizing && transcript){
-    Speech.speak(transcript)
-   setInterval(()=>setTranscript(""),3000)    
-  }
+    setSpeaking(true)
+    await axios.get(`${BASEURL}/ai/${userId}/voiceAi?prompt=${encodeURIComponent(transcript)}`,{headers:{"Authorization":`Bearer ${token}`}})
+    .then(({data})=>{
+       Speech.speak(data)
+       setSpeaking(false)
+   setInterval(()=>setTranscript(""),3000)  
+    })   
+  }}
+  speak()
 },[transcript,recognizing])
 
 
@@ -150,7 +163,7 @@ useEffect(()=>{
             change_brightness={tools.change_brightness}
             flash_screen={tools.flash_screen}
           />*/}
-          <Pressable onPressIn={()=>{setMicrophoneState({
+          <Pressable disabled={speaking} onPressIn={()=>{setMicrophoneState({
             weight:"bold",
             color:"blue"
           })

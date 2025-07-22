@@ -42,6 +42,68 @@ const theme:DeepPartial<Theme> = {
   title:{
     color:colors.textPrimary
   }
+ },
+ messageList:{
+  container:{
+    backgroundColor:colors.background
+  },
+  messageContainer:{
+    backgroundColor:colors.surface
+  },
+  messageSystem:{
+    text:{
+      color:colors.textPrimary},
+      container:{
+        backgroundColor:colors.surface
+      }
+  },
+  scrollToBottomButton:{
+    container:{
+      backgroundColor:colors.surface,
+    },
+       chevronColor:colors.iconColor
+  }
+ },
+ messageInput:{
+  inputBoxContainer:{
+    backgroundColor:colors.border,
+    borderColor:colors.border
+  },
+  container:{
+    backgroundColor:colors.surface
+  },
+  micButtonContainer:{
+    backgroundColor:colors.surface
+  },
+  audioRecorder:{
+    micContainer:{
+      backgroundColor:colors.surface
+    },
+    micIcon:{
+      color:colors.iconColor
+    }
+  },
+  audioRecordingButton:{
+    container:{
+      backgroundColor:colors.surface
+    },
+    micIcon:{
+      color:colors.iconColor
+    }
+  }
+ },
+ channelListSkeleton:{
+  background:{
+    backgroundColor:colors.surface
+  },
+  container:{
+    backgroundColor:colors.background
+  }
+ },
+ channelListLoadingIndicator:{
+  container:{
+    backgroundColor:colors.background
+  }
  }
 }
   return( 

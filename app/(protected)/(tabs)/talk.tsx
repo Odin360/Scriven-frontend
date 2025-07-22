@@ -120,9 +120,9 @@ const MessagesScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+   
       <View style={styles.container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar hidden={true}  />
         <Header scrollY={scrollY} headerHeight={headerHeight} />
         <AnimatedTabBar
           activeTab={activeTab}
@@ -153,7 +153,7 @@ const MessagesScreen = () => {
           options={options}
         />
       </View>
-    </SafeAreaView>
+  
   );
 };
 

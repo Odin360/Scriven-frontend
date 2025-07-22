@@ -14,7 +14,7 @@ const {width}=Dimensions.get("window")
 export default function MovingImages(){
   return (
 
-  <Marquee spacing={30} speed={0.5}>
+  <Marquee spacing={30} speed={0.5} style={{marginBottom:100}}>
     <ScrollView horizontal pagingEnabled >
       {images.map((image)=><Image key={image} source={{uri:image}} style={{height:width*0.5,width:width*0.8,marginHorizontal:5,borderRadius:18}}/>)}
     </ScrollView>
