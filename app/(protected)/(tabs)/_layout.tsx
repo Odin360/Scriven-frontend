@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform, View,Text, Dimensions, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { Platform, View,Text, Dimensions, TouchableOpacity, StyleSheet, Pressable, Alert } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import CustomTabBar from '@/components/ui/CustomTabBar';
 import { BottomSheetModal,BottomSheetModalProvider,BottomSheetView } from "@gorhom/bottom-sheet"
@@ -18,9 +18,10 @@ import { useUserStore } from '@/store/useUserStore';
 
 
 export default function TabLayout() {
-  const [microphoneState,setMicrophoneState]=useState<IconProps>({color:"black",weight:"thin"})
+  
   const colorScheme = useColorScheme();
   const colors  = useThemeColors();
+  const [microphoneState,setMicrophoneState]=useState<IconProps>({color:colors.iconColor,weight:"thin"})
   const{handleStart,handleStop,recognizing,transcript,setTranscript}=useSpeechRecognition()
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -38,13 +39,19 @@ export default function TabLayout() {
 useEffect(()=>{
   const speak=async()=>{
   if(!recognizing && transcript){
+    try{
     setSpeaking(true)
     await axios.get(`${BASEURL}/ai/${userId}/voiceAi?prompt=${encodeURIComponent(transcript)}`,{headers:{"Authorization":`Bearer ${token}`}})
     .then(({data})=>{
        Speech.speak(data)
-       setSpeaking(false)
-   setInterval(()=>setTranscript(""),3000)  
-    })   
+    setSpeaking(false)   
+   setInterval(()=>setTranscript(""),3000)
+    }) }
+    catch(e){
+      Alert.alert("Rating limit","You've hit your rating limit with Maya,wait for a minute and try again")
+      setInterval(()=>setTranscript(""),3000)
+      setInterval(()=>setSpeaking(false),57000)
+    }  
   }}
   speak()
 },[transcript,recognizing])
@@ -171,7 +178,7 @@ useEffect(()=>{
         }
           onPressOut={()=>{setMicrophoneState({
             weight:"thin",
-            color:"black"
+            color:colors.iconColor
           })
           handleStop()}
         }
