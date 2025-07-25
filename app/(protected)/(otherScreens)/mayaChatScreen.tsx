@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator,StyleSheet } from 'react-native'
+import { View, Text, ActivityIndicator,StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useEffect } from 'react'
 import { Channel, MessageInput, MessageList, useChatContext } from 'stream-chat-expo'
 import { useAppContext } from '@/providers/AppContext'
@@ -58,7 +58,7 @@ return()=>{mayaChannel.off('message.new',HandleMessage)}
     }
   return (<>
     <SafeAreaView style={{flex:1,paddingBottom:10}}>
-     
+       <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
       <Channel channel={mayaChannel} audioRecordingEnabled>
          <View style={{alignItems:'center',flexDirection:"row",justifyContent: 'space-between',borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:colors.primary,height:50,padding:10}}>
         <Ionicons name="arrow-back-sharp" size={24} color="black" onPress={()=>router.back()} />
@@ -68,6 +68,7 @@ return()=>{mayaChannel.off('message.new',HandleMessage)}
         <MessageList/>
         <MessageInput/>
       </Channel>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       </>
   )
