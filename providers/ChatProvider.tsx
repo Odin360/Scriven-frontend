@@ -3,11 +3,10 @@ import { ChannelData, OwnUserResponse, StreamChat, UserResponse } from "stream-c
 import { Chat } from "stream-chat-expo";
 import { ActivityIndicator, View } from "react-native";
 import { useUserStore } from "@/store/useUserStore";
-import { useAuthStore } from "@/store/useAuthStore";
-import { BASEURL } from "@/constants/Api";
+
 
 export const apiKey = "kcghu45jpmy8";
-// const api_secret = "uwjw9yjzke9nvhxp5ryrcs9epf82n66bf795x54dy66h8e3jy4bj7npgf892twtv"; // keep this secret off frontend
+
 
 export default function ChatProvider({ children }: PropsWithChildren) {
   const [chatClient, setChatClient] = useState<StreamChat | null>(null);
@@ -66,5 +65,5 @@ const isMounted = useRef(true)
     );
   }
 
-  return <Chat client={chatClient}>{children}</Chat>;
+  return <Chat client={chatClient} isMessageAIGenerated={(message:any)=>!!message.ai_generated}>{children}</Chat>;
 }
