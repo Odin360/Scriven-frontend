@@ -53,11 +53,11 @@ const index = () => {
            <View style={{alignItems:"center",justifyContent:"center"}}>
         {/**first Icon set */}
        <View style={{alignItems:"center",flexDirection:"row",flexWrap:"wrap",justifyContent:"center",gap:10,marginVertical:10}}>
-        <IconContainer onPress={()=>router.push("/")}>
+        <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/createCall")}>
           <VideoCameraIcon color={colors.iconColor} weight='fill' />
         <Text style={{color:colors.textPrimary}}>Create{"\n"}Meeting</Text>
         </IconContainer>
-        <IconContainer onPress={()=>router.push("/")}>
+        <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/joinCall")}>
           <VideoConferenceIcon color={colors.iconColor} weight='fill' />
         <Text style={{color:colors.textPrimary}}>Join{"\n"}Meeting</Text>
         </IconContainer>
@@ -73,7 +73,7 @@ const index = () => {
           <GithubLogoIcon color={colors.iconColor} weight='fill' />
        <Text style={{color:colors.textPrimary}}>Github</Text>
         </IconContainer>
-        <IconContainer onPress={()=>router.push("/")}>
+        <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/uploadImage")}>
           <SlackLogoIcon color={colors.iconColor} weight='fill' />
         <Text style={{color:colors.textPrimary}}>Schedule </Text>
         </IconContainer>

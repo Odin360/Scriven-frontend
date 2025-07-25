@@ -9,6 +9,8 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useUserStore } from '@/store/useUserStore';
 import { useTeamStore } from '@/store/useTeamStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useChannelContext, useChatContext } from 'stream-chat-expo';
+import { ChannelData } from 'stream-chat';
 
 
 export default function JoinTeamScreen() {
@@ -17,6 +19,7 @@ export default function JoinTeamScreen() {
   const [teams,setTeams]=useState<Array<any>|null>(null);
   const [joiningTeamId, setJoiningTeamId] = useState<string | null>(null);
   const [success,setSuccess]=useState(false)
+  const [channelData,setChannelData]=useState(null)
 const token = useAuthStore(state=>state.token)
 const setTeamId = useTeamStore(state=>state.setTeamId)
 const setTeamDrive = useTeamStore(state=>state.setTeamDrive)
@@ -36,6 +39,9 @@ if(!teams){
  
 
   const handleJoin = async (teamId: string) => {
+    const {client}=useChatContext();
+    
+
     try{
     if (joiningTeamId) return; // 
     if(!userId)return;
@@ -49,8 +55,24 @@ if(!teams){
       setTeamId(team.id)
       setTeamDrive(team.drive)
       setTeamName(team.name)
-      setSuccess(true)}
-    )
+       const channelData:ChannelData|any = {name:team.name} 
+       setChannelData(channelData)   
+    }
+    ).then(async()=>{
+      if(!userId || !channelData ){return}
+     
+      try{
+      const channel = client.channel("messaging",teamId,channelData);
+    
+      await channel.watch().then(async()=>{
+     const result =  await  channel.addMembers([{user_id:userId,channel_role:"channel_moderator"}])
+     setSuccess(true)
+  console.log(result)})
+       }
+      catch(e){
+        console.log(e)
+      }
+    })
     
     setJoiningTeamId(null);
 

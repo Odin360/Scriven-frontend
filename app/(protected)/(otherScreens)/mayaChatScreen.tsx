@@ -10,16 +10,18 @@ import { useUserStore } from '@/store/useUserStore'
 import axios from 'axios'
 import { BASEURL } from '@/constants/Api'
 import { useAuthStore } from '@/store/useAuthStore'
+import { useTeamStore } from '../../../store/useTeamStore'
 
 
 const mayaChatScreen = () => {
   const userId = useUserStore(state=>state.id)
+  const teamId = useTeamStore(state=>state.id)
   const token =useAuthStore(state=>state.token)
     const {colors}=useTheme()
     const {channel:mayaChannel}:any=useAppContext()
     
     if(!userId)return
-    /*const mayaChannel = client.channel("messaging",{members:[userId,"Maya-Ai"]})*/
+   
 
     useEffect(()=>{
     const HandleMessage=async(event:any)=>{
@@ -30,8 +32,15 @@ const mayaChatScreen = () => {
          
  if(message&&message.text&&message.text.trim()!==""&&message.user.id===userId){
          console.log(mayaChannel.id)
-try{
-  await axios.get(`${BASEURL}/ai/${mayaChannel.id}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+try{if(teamId){
+  console.log("team available")
+  await axios.get(`${BASEURL}/ai/${mayaChannel.id}/${userId}/${teamId}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+}
+else{
+   console.log("team not available")
+   await axios.get(`${BASEURL}/ai/${mayaChannel.id}/${userId}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+}
+
 }
 catch(e){
   console.log(e)

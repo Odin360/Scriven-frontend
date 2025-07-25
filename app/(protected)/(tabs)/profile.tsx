@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, Image, Dimensions, StyleSheet, TouchableOpacity, Linking, Pressable } from 'react-native';
 import React, { useEffect } from 'react';
 import ParallaxScrollView from '@/components/ParallaxScrollView2';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -6,7 +6,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -45,12 +45,12 @@ const setToken = useAuthStore(state=>state.setToken)
     <ParallaxScrollView
       headerBackgroundColor={{ dark: colors.background, light: colors.background }}
       headerImage={
-        <View>
+        <Link asChild href={"/(protected)/(otherScreens)/uploadImage"}>
           <Image
             style={{ width: width, height: width }}
             source={require("@/assets/images/welcome.png")}
           />
-        </View>
+        </Link>
       }
     >
       <Animated.View
