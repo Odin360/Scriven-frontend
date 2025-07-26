@@ -73,7 +73,7 @@ const index = () => {
           <GithubLogoIcon color={colors.iconColor} weight='fill' />
        <Text style={{color:colors.textPrimary}}>Github</Text>
         </IconContainer>
-        <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/uploadImage")}>
+        <IconContainer onPress={()=>router.push("/")}>
           <SlackLogoIcon color={colors.iconColor} weight='fill' />
         <Text style={{color:colors.textPrimary}}>Schedule </Text>
         </IconContainer>

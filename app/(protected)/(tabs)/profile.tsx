@@ -1,12 +1,14 @@
-import { View, Text, Image, Dimensions, StyleSheet, TouchableOpacity, Linking, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  ScrollView,
+} from 'react-native';
 import React, { useEffect } from 'react';
-import ParallaxScrollView from '@/components/ParallaxScrollView2';
-import Entypo from '@expo/vector-icons/Entypo';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useTheme } from '@react-navigation/native';
-import { Link, router } from 'expo-router';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,19 +16,39 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { useThemeColors } from '@/hooks/useThemeColor';
-import { CaretRightIcon, GearIcon, GreaterThanIcon, HeadCircuitIcon, QrCodeIcon, WalletIcon } from 'phosphor-react-native';
+import {
+  CaretRightIcon,
+  GearIcon,
+  QrCodeIcon,
+  SignOutIcon,
+  UserSwitchIcon,
+  PhoneCallIcon,
+  UserIcon,
+  CheckCircleIcon,
+  PentagramIcon,
+  CameraIcon,
+} from 'phosphor-react-native';
 import { useAuthStore } from '@/store/useAuthStore';
+import { router } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get('window');
 
 const Profile = () => {
-  const  colors  = useThemeColors();
-
+  const colors = useThemeColors();
   const fadeAnim = useSharedValue(0);
   const scaleAnim = useSharedValue(0.9);
+  const token = useAuthStore((state) => state.token);
+  const setToken = useAuthStore((state) => state.setToken);
 
-  const reportIssueMail = `mailto:Odin360team@gmail.com?subject=${encodeURIComponent("Report an issue")}&body=${encodeURIComponent("")}`;
-  const contactUs = `mailto:Odin360team@gmail.com?subject=${encodeURIComponent("Contact us")}&body=${encodeURIComponent("")}`;
+  const reportIssueMail = `mailto:Odin360team@gmail.com?subject=${encodeURIComponent(
+    'Report an issue'
+  )}&body=${encodeURIComponent('')}`;
+  const contactUs = `mailto:Odin360team@gmail.com?subject=${encodeURIComponent(
+    'Contact us'
+  )}&body=${encodeURIComponent('')}`;
 
   useEffect(() => {
     fadeAnim.value = withTiming(1, { duration: 1000 });
@@ -40,174 +62,238 @@ const Profile = () => {
     opacity: fadeAnim.value,
     transform: [{ scale: scaleAnim.value }],
   }));
-const setToken = useAuthStore(state=>state.setToken)
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ dark: colors.background, light: colors.background }}
-      headerImage={
-        <Link asChild href={"/(protected)/(otherScreens)/uploadImage"}>
-          <Image
-            style={{ width: width, height: width }}
-            source={require("@/assets/images/welcome.png")}
-          />
-        </Link>
-      }
-    >
-      <Animated.View
-        style={[
-          { paddingBottom: 500, flex: 1 },
-          animatedStyle
-        ]}
-      >
-        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-          <View style={styles.profileHeader}>
-            <View style={styles.profileInfo}>
-              <Text style={styles.name}>Williams</Text>
-              <View style={styles.badgeContainer}>
-                <QrCodeIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-              </View>
-            </View>
-            <Text style={[styles.email, { color: colors.textPrimary }]}>ki****@gmail.com</Text>
-            <Text style={[styles.team, { color: colors.textPrimary }]}>ScrivenTek</Text>
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
-            <View style={styles.statusContainer}>
-              <View style={[styles.statusDot, { backgroundColor: colors.secondaryButton }]} />
-              <Text style={[styles.statusText, { color: colors.textPrimary }]}>Active Now</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-          <TouchableOpacity style={styles.menuItem}>
-            <View style={styles.menuItemContent}>
-              <WalletIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-              <Text style={styles.menuText}>Wallet</Text>
-            </View>
-            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-          </TouchableOpacity>
-          <View style={[styles.divider, { backgroundColor: colors.border }]} />
-          <TouchableOpacity style={styles.menuItem} onPress={() => Linking.openURL(contactUs)}>
-            <View style={styles.menuItemContent}>
-              <HeadCircuitIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-              <Text style={styles.menuText}>Customer Service</Text>
-            </View>
-            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => router.push("/(protected)/(otherScreens)/settings")}
-          style={[styles.card, { borderColor: colors.border, backgroundColor: colors.background }]}
-        >
-          <View style={styles.menuItem}>
-            <View style={styles.menuItemContent}>
-              <GearIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-              <Text style={styles.menuText}>Settings and Privacy</Text>
-            </View>
-            <CaretRightIcon  size={24} color={colors.iconColor} weight='duotone' duotoneColor={colors.iconSecondary}/>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.reportButton, { backgroundColor: colors.dangerAccent }]}
-          activeOpacity={0.8}
-          onPress={() => Linking.openURL(reportIssueMail)}
-        >
-          <View style={styles.buttonContent}>
-            <AntDesign name="warning" size={24} color="white" />
-            <Text style={styles.buttonText}>Report an issue</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-        onPress={()=>{
-          setToken(null)
-          router.replace("/(auth)/signIn")
+    <SafeAreaView style={{ flex: 1,backgroundColor:colors.background }}>
+      <ScrollView style={{flex:1,backgroundColor:colors.background}} showsVerticalScrollIndicator={false}>
+      {/* Logo */}
+      <Image
+        style={styles.logo}
+        source={{
+          uri: 'https://drive.google.com/uc?export=view&id=1n8rZC_2mUS6Cj8fX0wK9Pk2MSdpQpNp8',
         }}
-          style={[styles.logoutButton, { backgroundColor: colors.dangerAccent }]}
-          activeOpacity={0.8}
-        >
-          <View style={styles.buttonContent}>
-            <MaterialIcons name="logout" size={24} color="white" />
-            <Text style={styles.buttonText}>Logout</Text>
+      />
+
+      {/* Info Container */}
+      <Animated.View style={[animatedStyle, styles.animatedContainer]}>
+        {/* Banner Image with Camera Icon */}
+        <TouchableOpacity style={styles.imageWrapper}>
+          <Image
+            source={{ uri: 'https://i.pravatar.cc/300' }}
+            style={styles.profileImage}
+          />
+          <View style={styles.cameraIcon}>
+            <CameraIcon size={22} color="#fff" />
           </View>
+        </TouchableOpacity>
+
+        {/* Name and Email */}
+        <View style={{flexDirection:"row",marginTop: 16,alignItems:"center",justifyContent:"space-between"}}> 
+                 <View style={{ alignItems: 'center' }}>
+          <Text style={[styles.name,{color:colors.textPrimary}]}>Williams Adusei</Text>
+          <Text style={[styles.email,{color:colors.textPrimary}]}>williams@example.com</Text>
+        </View>
+
+        {/* QR Code */}
+        <TouchableOpacity style={styles.qrWrapper}>
+          <QrCodeIcon size={32} color={colors.iconColor} />
+        </TouchableOpacity>
+      </View>
+
+        {/* Manage Account */}
+        <TouchableOpacity
+          onPress={() => router.push('/')}
+          style={[styles.menuItem, { marginTop: 24 }]}
+        >
+          <View style={styles.menuItemContent}>
+            <UserIcon size={24} color={colors.iconColor} />
+            <Text style={[styles.menuText,{color:colors.textPrimary}]}>Manage your account</Text>
+          </View>
+          <CaretRightIcon size={20} color={colors.iconColor} />
         </TouchableOpacity>
       </Animated.View>
-    </ParallaxScrollView>
+
+      {/* Current Team */}
+      <View style={styles.teamRow}>
+        <CheckCircleIcon color="green" weight="fill" size={24} />
+        <Text style={[styles.team,{color:colors.textSecondary}]}>Scriven</Text>
+      </View>
+
+      {/* Other Menu Items */}
+      {[
+        {
+          icon: <UserSwitchIcon size={24} color={colors.iconColor} />,
+          label: 'Switch Account',
+        },
+        {
+          icon: <GearIcon size={24} color={colors.iconColor} />,
+          label: 'Settings & Privacy',
+        },
+        {
+          icon: <PhoneCallIcon size={24} color={colors.iconColor} />,
+          label: 'Help & Feedback',
+          action: () => Linking.openURL(contactUs),
+        },
+        {
+          icon: <MaterialIcons name="policy" size={24} color={colors.iconColor} />,
+          label: 'Privacy & Terms',
+          action: () => Linking.openURL('https://yourapp.com/terms'),
+        },
+      ].map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.menuItem}
+          onPress={item.action}
+        >
+          <View style={styles.menuItemContent}>
+            {item.icon}
+            <Text style={[styles.menuText,{color:colors.textPrimary}]}>{item.label}</Text>
+          </View>
+          <CaretRightIcon size={20} color={colors.iconColor} />
+        </TouchableOpacity>
+      ))}
+
+      {/* Get Premium */}
+     {/* Why Go Premium? */}
+<View style={{ marginTop: 30, paddingHorizontal: 20 }}>
+  <Text style={{ 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    marginBottom: 12, 
+    color: colors.textPrimary 
+  }}>
+    🚀 Want more Productivity?{"\n"}
+    Go Premium
+  </Text>
+
+  
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 8,
+        padding: 12,
+        backgroundColor: colors.surface ,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
+      }}
+    >
+      
+      <Text style={{ marginLeft: 12, fontSize: 14, color: colors.textSecondary }}>
+        Try our premium package and see what Maya can do
+      </Text>
+    </View>
+
+</View>
+
+      <TouchableOpacity onPress={()=>router.push("/(protected)/(otherScreens)/premium")} style={[styles.buttonContent, { marginVertical: 20, paddingHorizontal: 20, width: '100%' }]}>
+        <LinearGradient
+          style={[styles.buttonContent, {
+            height: 50,
+            justifyContent: 'space-between',
+            paddingHorizontal: 20
+          }]}
+          start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+          colors={[colors.background, colors.highlightAccent, colors.background, colors.shadow]}
+        >
+          <View style={{ flexDirection: 'row', gap: 12 }}>
+            <PentagramIcon size={24} color={colors.highlightAccent} />
+            <Text style={[styles.buttonText, { color: colors.textPrimary }]}>Get Premium</Text>
+          </View>
+          <View>
+            <Text style={{ fontStyle: 'italic', color: colors.textPrimary }}>Try Maya Pro 😎</Text>
+            <Text style={{ fontStyle: 'italic', color: colors.textPrimary }}>for free 💯</Text>
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
+
+      {/* Report Issue */}
+      <TouchableOpacity
+        onPress={() => Linking.openURL(reportIssueMail)}
+        style={[styles.reportButton,{borderColor:colors.dangerAccent,backgroundColor:colors.background}]}
+      >
+        <Text style={[styles.buttonText, { color: colors.dangerAccent }]}>Report an issue</Text>
+      </TouchableOpacity>
+
+      {/* Logout */}
+      <TouchableOpacity
+        onPress={() => {
+          setToken(null);
+          router.replace('/(auth)/signIn');
+        }}
+        style={[styles.logoutButton,{borderColor:colors.dangerAccent,backgroundColor:colors.background}]}
+      >
+        <View style={styles.buttonContent}>
+          <SignOutIcon size={24} color={colors.dangerAccent} />
+          <Text style={[styles.buttonText, { color: colors.dangerAccent }]}>Logout</Text>
+        </View>
+      </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    justifyContent: "center",
-    padding: 16,
-    borderWidth: StyleSheet.hairlineWidth,
-    width: '90%',
-    marginBottom: '5%',
-    alignSelf: "center",
-    borderRadius: 18,
-    opacity: 1,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  logo: {
+    height: 30,
+    width: 120,
+    alignSelf: 'center',
+    marginTop: 12,
   },
-  profileHeader: {
-    gap: 8,
+  animatedContainer: {
+    padding: 20,
   },
-  profileInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  imageWrapper: {
+    width: '100%',
+    aspectRatio: 2.5,
+    borderRadius: 16,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  profileImage: {
+    width: '100%',
+    height: '100%',
+  },
+  cameraIcon: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#0008',
+    padding: 6,
+    borderRadius: 20,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
   },
-  badgeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  statusText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: '600',
-  },
   email: {
     fontSize: 16,
   },
+  qrWrapper: {
+    marginTop: 12,
+    alignItems: 'center',
+  },
+  teamRow: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    gap: 12,
+    marginTop: 8,
+  },
   team: {
     fontSize: 16,
-  },
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    marginVertical: 12,
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
   },
   menuItemContent: {
     flexDirection: 'row',
@@ -221,49 +307,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     alignItems: 'center',
+    flex: 1,
   },
   buttonText: {
-    color: 'white',
     fontSize: 16,
     fontWeight: '600',
   },
   reportButton: {
-    width: '100%',
+    width: '90%',
     height: 50,
-    marginBottom: '5%',
+    marginTop: 10,
+    marginBottom: 10,
     borderWidth: 2,
-    borderColor: 'red',
-    alignItems: "center",
-    opacity: 0.9,
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
   },
   logoutButton: {
-    width: '100%',
+    width: '90%',
     height: 50,
     borderWidth: 2,
-    borderColor: '#D54A4D',
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.9,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  }
+    marginBottom:100
+  },
 });
 
 export default Profile;
