@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Dimensions, TouchableOpacity, Image } from 'rea
 import React from 'react';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { useThemeColors } from '@/hooks/useThemeColor';
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
@@ -160,7 +160,7 @@ export default function PremiumScreen() {
       >
         <TouchableOpacity
           onPress={() => {
-            // Handle subscription logic or redirect here
+            router.push("/(protected)/(otherScreens)/mayaPro")
           }}
           style={{
             backgroundColor: '#6C47FF',
