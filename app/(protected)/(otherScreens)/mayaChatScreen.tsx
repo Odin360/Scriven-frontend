@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator,StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, ActivityIndicator,StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useEffect } from 'react'
 import { AITypingIndicatorView, Channel, MessageInput, MessageList, useChatContext } from 'stream-chat-expo'
 import { useAppContext } from '@/providers/AppContext'
@@ -11,13 +11,16 @@ import axios from 'axios'
 import { BASEURL } from '@/constants/Api'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useTeamStore } from '../../../store/useTeamStore'
+import { useThemeColors } from '@/hooks/useThemeColor'
+import { LinearGradient } from 'expo-linear-gradient'
+import { ArrowLeftIcon } from 'phosphor-react-native'
 
 
 const mayaChatScreen = () => {
   const userId = useUserStore(state=>state.id)
   const teamId = useTeamStore(state=>state.id)
   const token =useAuthStore(state=>state.token)
-    const {colors}=useTheme()
+    const colors = useThemeColors()
     const {channel:mayaChannel}:any=useAppContext()
     
     if(!userId)return
@@ -56,21 +59,23 @@ return()=>{mayaChannel.off('message.new',HandleMessage)}
             </View>
         )
     }
+    const {width}=Dimensions.get("window")
   return (<>
-    <SafeAreaView style={{flex:1,paddingBottom:10}}>
+    
        <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
-      <Channel channel={mayaChannel} audioRecordingEnabled isMessageAIGenerated={(message:any)=>!!message.ai_generated}>
-         <View style={{alignItems:'center',flexDirection:"row",justifyContent: 'space-between',borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:colors.primary,height:50,padding:10}}>
-        <Ionicons name="arrow-back-sharp" size={24} color="black" onPress={()=>router.back()} />
-            <Text style={{fontWeight:"bold",color:colors.text}}>Maya</Text>
-            <Feather name="more-vertical" size={24} color="black" />
-        </View>
+      <Channel channel={mayaChannel}  isMessageAIGenerated={(message:any)=>!!message.ai_generated}>
+         <LinearGradient start={{x:0,y:0}} end={{x:1,y:1}} colors={[colors.gradientStart,colors.gradientMiddle,colors.gradientEnd]} style={{alignItems:'center',flexDirection:"row",borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:colors.border,height:width*0.2,padding:10,gap:20}}>
+        <TouchableOpacity onPress={()=>router.back()}>
+        <ArrowLeftIcon size={24} color={colors.iconColor} weight='fill' />
+            </TouchableOpacity>
+            <Text style={{fontWeight:"bold",color:colors.textPrimary}}>Maya</Text>
+        </LinearGradient>
         <MessageList/>
         <AITypingIndicatorView/>
         <MessageInput/>
       </Channel>
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      
       </>
   )
 }

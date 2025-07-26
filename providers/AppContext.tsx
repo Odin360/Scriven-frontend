@@ -1,20 +1,26 @@
 // AppContext.js
 
 import React, { PropsWithChildren, useState } from "react";
-import {Channel} from 'stream-chat'
+import {Channel, Thread} from 'stream-chat'
+
+interface AppContext{
+  channel:null | Channel,
+  setChannel:(channel:Channel)=>void,
+  thread:null | Thread
+  setThread:(thread:Thread)=>void
+}
 
 
-
-export const AppContext= React.createContext({
-  channel: null,
-  setChannel: (channel:Channel | any) => {},
+export const AppContext= React.createContext<AppContext>({
+  channel:null,
+  setChannel: (channel:Channel) => {},
   thread: null,
-  setThread: (thread:any) => {},
+  setThread: (thread:Thread) => {},
 });
 
 export const AppProvider = ({children}:PropsWithChildren ) => {
-  const [channel, setChannel] = useState<any>();
-  const [thread, setThread] = useState<any>();
+  const [channel, setChannel] = useState< null | Channel>(null);
+  const [thread, setThread] = useState<null | Thread>(null);
 
   return (
     <AppContext.Provider value={{ channel, setChannel, thread, setThread }}>

@@ -1,7 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, TextInput, Switch, StyleSheet, Dimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useTheme } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { useThemeColors } from '@/hooks/useThemeColor'
 import {GearIcon,PasswordIcon,UsersIcon,LightbulbIcon,SignOutIcon,MoonIcon,SunIcon, MailboxIcon,ArrowLeftIcon,PersonSimpleCircleIcon,PersonSimpleIcon } from 'phosphor-react-native'

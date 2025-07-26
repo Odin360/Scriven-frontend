@@ -9,7 +9,7 @@ import CallHeader from "@/components/ui/CallHeader";
 import CallDurationBadge from "@/components/ui/CallDuration";
 export default function CallScreen(){
     const client = useStreamVideoClient()
-    const {meetingID} = useLocalSearchParams()
+    const {meetingID}:any = useLocalSearchParams()
    console.log(meetingID)
     const [call,setCall]=useState<null | Call>(null)
     useEffect(() => {

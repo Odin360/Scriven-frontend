@@ -28,10 +28,14 @@ export default function User({ user }: UserProps) {
 
     const handleMessagePress = async() => {
         if(!userId){return}
+        try{
         const channel = client.channel("messaging",{members:[userId,user.id]})
         await channel.watch()
         setChannel(channel)
-       router.push('/(protected)/(otherScreens)/chatScreen')
+       router.push('/(protected)/(otherScreens)/chatScreen')}
+    catch(e){
+        console.warn(e)
+    }
     }
 
     const getInitials = (name: string) => {
@@ -61,17 +65,17 @@ export default function User({ user }: UserProps) {
                             </Text>
                         )}
                     </LinearGradient>
-                    <View style={[
+                  {user.status && <View style={[
                         styles.statusIndicator,
                         { 
                             backgroundColor: user.status === 'online' ? '#4CAF50' : '#9E9E9E',
                             borderColor: colors.background
                         }
-                    ]} />
+                    ]} />}
                 </View>
                 <View style={styles.userInfo}>
                     <Text style={[styles.username, { color: colors.text }]}>{user.username}</Text>
-                    <Text style={[styles.role, { color: colors.text + '80' }]}>{user.role}</Text>
+                  {user.role && <Text style={[styles.role, { color: colors.text + '80' }]}>{user.role}</Text>}
                 </View>
             </View>
             <TouchableOpacity
