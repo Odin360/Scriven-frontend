@@ -8,6 +8,14 @@ export default function mayaPro(){
         <SafeAreaView style={{flex:1,alignItems:"center",justifyContent:"center"}}>
         
             <ConvAiDOMComponent
+             dom={{ style: styles.domComponent,
+              mediaCapturePermissionGrantType: 'grant', 
+                                                
+                      
+                                                   
+          mediaPlaybackRequiresUserAction: false,  
+
+              }}
             get_battery_level={tools.get_battery_level}
             change_brightness={tools.change_brightness}
             flash_screen={tools.flash_screen}
@@ -23,6 +31,10 @@ const styles= StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,
+  },
+   domComponent: {
+    width: 120,
+    height: 120,
   },
 
 })
