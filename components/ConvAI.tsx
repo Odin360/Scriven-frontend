@@ -1,34 +1,21 @@
-import tools from '@/Utils/tools';
-import { useCallback } from 'react';
-import {useConversation} from "@elevenlabs/react"
-import { Pressable, View,StyleSheet } from 'react-native';
+import { useConversation } from '@elevenlabs/react';
 import { MicrophoneIcon } from 'phosphor-react-native';
+import { useCallback } from 'react';
+import { View, Pressable, StyleSheet } from 'react-native';
 
-async function requestMicrophonePermission() {
-  try {
-    await navigator.mediaDevices.getUserMedia({ audio: true });
-    return true;
-  } catch (error) {
-    console.log(error);
-    console.error('Microphone permission denied');
-    return false;
-  }
-}
+import tools from '@/Utils/tools';
 
 
 
 export default function ConvAiDOMComponent({
-  platform,
   get_battery_level,
   change_brightness,
   flash_screen,
 }: {
-  dom?: import('expo/dom').DOMProps;
-  platform: string;
   get_battery_level: typeof tools.get_battery_level;
   change_brightness: typeof tools.change_brightness;
   flash_screen: typeof tools.flash_screen;
-}) {
+}){
   const conversation = useConversation({
     onConnect: () => console.log('Connected'),
     onDisconnect: () => console.log('Disconnected'),
@@ -38,20 +25,11 @@ export default function ConvAiDOMComponent({
     onError: (error) => console.error('Error:', error),
   });
   const startConversation = useCallback(async () => {
-    try {
-      // Request microphone permission
-      const hasPermission = await requestMicrophonePermission();
-      if (!hasPermission) {
-        alert('No permission');
-        return;
-      }
-
+  
+try{
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: 'YOUR_AGENT_ID', // Replace with your agent ID
-        dynamicVariables: {
-          platform,
-        },
+        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0',
         clientTools: {
           get_battery_level,
           change_brightness,
@@ -63,11 +41,11 @@ export default function ConvAiDOMComponent({
     }
   }, [conversation]);
 
-    const stopConversation = useCallback(async () => {
+  const stopConversation = useCallback(async () => {
     await conversation.endSession();
   }, [conversation]);
 
-    return (
+  return (
     <Pressable
       style={[styles.callButton, conversation.status === 'connected' && styles.callButtonActive]}
       onPress={conversation.status === 'disconnected' ? startConversation : stopConversation}
@@ -78,11 +56,12 @@ export default function ConvAiDOMComponent({
           conversation.status === 'connected' && styles.buttonInnerActive,
         ]}
       >
-        <MicrophoneIcon size={32} color="#E2E8F0" weight='bold' style={styles.buttonIcon} />
+        <MicrophoneIcon size={32} weight="fill"   color='blue'/>
       </View>
     </Pressable>
   );
 }
+
 const styles = StyleSheet.create({
   callButton: {
     width: 120,
@@ -120,6 +99,3 @@ const styles = StyleSheet.create({
     transform: [{ translateY: 2 }],
   },
 });
-  //...
-
-// ...
