@@ -13,7 +13,11 @@
   "dependencies": {
     "@animatereactnative/marquee": "^0.5.2",
     "@config-plugins/react-native-webrtc": "^12.0.0",
+<<<<<<< HEAD
     "@elevenlabs/react": "^0.3.0",
+=======
+    "@elevenlabs/react": "^0.4.1",
+>>>>>>> c59e51f34f2bef3870757df09ba14ab73c5f2cb0
     "@expo/vector-icons": "^14.1.0",
     "@gorhom/bottom-sheet": "^5",
     "@hookform/resolvers": "^5.1.1",

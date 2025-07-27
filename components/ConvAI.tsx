@@ -1,21 +1,32 @@
-import { useConversation } from '@elevenlabs/react';
-import { MicrophoneIcon } from 'phosphor-react-native';
-import { useCallback } from 'react';
-import { View, Pressable, StyleSheet } from 'react-native';
+"use dom";
 
+import { useConversation } from '@elevenlabs/react';
+import { MicrophoneIcon} from "phosphor-react-native"
+import { useCallback } from 'react';
+import { View, Pressable,StyleSheet,PermissionsAndroid,Platform } from 'react-native';
 import tools from '@/Utils/tools';
 
-
+async function requestMicrophonePermission() {
+  try {
+    await navigator.mediaDevices.getUserMedia({ audio: true });
+    return true;
+  } catch (error) {
+    console.log(error);
+    console.error('Microphone permission denied');
+    return false;
+  }
+}
 
 export default function ConvAiDOMComponent({
   get_battery_level,
   change_brightness,
   flash_screen,
 }: {
+  dom?: import('expo/dom').DOMProps;
   get_battery_level: typeof tools.get_battery_level;
   change_brightness: typeof tools.change_brightness;
   flash_screen: typeof tools.flash_screen;
-}){
+}) {
   const conversation = useConversation({
     onConnect: () => console.log('Connected'),
     onDisconnect: () => console.log('Disconnected'),
@@ -25,16 +36,22 @@ export default function ConvAiDOMComponent({
     onError: (error) => console.error('Error:', error),
   });
   const startConversation = useCallback(async () => {
-  
-try{
+    try {
+      // Request microphone permission
+      const hasPermission = await requestMicrophonePermission();
+      if (!hasPermission) {
+        alert('No permission');
+        return;
+      }
+
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0',
+        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0', // Replace with your agent ID,
         clientTools: {
           get_battery_level,
           change_brightness,
           flash_screen,
-        },
+        }
       });
     } catch (error) {
       console.error('Failed to start conversation:', error);
@@ -56,7 +73,7 @@ try{
           conversation.status === 'connected' && styles.buttonInnerActive,
         ]}
       >
-        <MicrophoneIcon size={32} weight="fill"   color='blue'/>
+        <MicrophoneIcon size={32} color="#E2E8F0" weight = "fill" style={styles.buttonIcon} />
       </View>
     </Pressable>
   );
