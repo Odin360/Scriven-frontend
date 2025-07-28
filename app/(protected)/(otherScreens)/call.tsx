@@ -6,25 +6,9 @@ import CustomCallControls from "@/components/ui/CustomCallControls";
 import CallHeader from "@/components/ui/CallHeader";
 import CallDurationBadge from "@/components/ui/CallDuration";
 import CallSummary from "@/components/ui/CallSummary";
-import { fa } from "zod/v4/locales";
 import { useAppContext } from "@/providers/AppContext";
 export default function CallScreen(){
-    const client = useStreamVideoClient()
-    const joinCallPressed=useRef(false)
-    const {meetingID}:any = useLocalSearchParams()
-   console.log(meetingID)
    const {call}=useAppContext()
-    //const [call,setCall]=useState<null | Call>(null)
-  // useEffect(() => {
- // if (!client || !meetingID || call) return;
-  //const _call = client.call('default', meetingID);
- //_call.join({ create: true }).then(() => {
-  //}).catch((err) => {
-   // console.error("Error joining call:", err);
-  ///})
-
-  // setCall(_call);
-//}, [client, meetingID, call]);
 
 
   useEffect(() => {

@@ -13,7 +13,9 @@ export default function LobbyScreen(){
       }  
      
     return(<StreamCall call={call}>
-        <Lobby onJoinCallHandler={()=>router.push("/call")}/>
+        <Lobby onJoinCallHandler={async()=>{
+          await call.startTranscription({ enable_closed_captions: true });
+          router.push("/call")}}/>
             </StreamCall>
     )
 }
