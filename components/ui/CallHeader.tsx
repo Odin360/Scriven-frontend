@@ -9,7 +9,7 @@ const CallHeader = ({children}:PropsWithChildren) => {
   const {width}=Dimensions.get("window")
   return (
     
-   <LinearGradient start={{x:0,y:0}} end={{x:1,y:1}} colors={["#1E2A33","#3C2A4D", "#4A2F36"]} style={{alignItems:'center',flexDirection:"row",borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:"#2E2E2E",height:width*0.2,justifyContent:"center"}}>
+   <LinearGradient start={{x:0,y:0}} end={{x:1,y:1}} colors={["#1E2A33","#3C2A4D", "#4A2F36"]} style={{alignItems:'center',flexDirection:"row",borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:"#2E2E2E",height:width*0.2,justifyContent:"center",gap:20}}>
           {children}
     </LinearGradient>
     

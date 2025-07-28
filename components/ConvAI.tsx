@@ -46,7 +46,8 @@ export default function ConvAiDOMComponent({
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0', // Replace with your agent ID,
+        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0',
+        connectionType:"webrtc", // Replace with your agent ID,
         clientTools: {
           get_battery_level,
           change_brightness,
