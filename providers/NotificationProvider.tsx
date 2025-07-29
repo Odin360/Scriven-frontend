@@ -42,9 +42,7 @@ export default function NotificationsProvider ({children}:PropsWithChildren){
     init();
 
   }, []);
-  if (!isReady) {
-    return null;
-  }
+  
   
    
     return(
