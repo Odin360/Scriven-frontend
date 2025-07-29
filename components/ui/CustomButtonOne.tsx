@@ -8,6 +8,7 @@ type Props = {
   width?: number | string |any
   height?: number | string |any;
   onPress?: () => void;
+  disabled:boolean
   style?: ViewStyle;
   textStyle?: TextStyle;
 };
@@ -16,6 +17,7 @@ const CustomButton1: React.FC<Props> = ({
   width = '80%',
   height = 50,
   onPress,
+  disabled,
   style,
   textStyle,
 }) => {
@@ -25,6 +27,7 @@ const colors=useThemeColors()
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled}
       activeOpacity={0.8}
          >
       <LinearGradient  style={[

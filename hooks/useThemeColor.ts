@@ -4,6 +4,7 @@
  */
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useUserStore } from '@/store/useUserStore';
 
 /*
 
@@ -21,12 +22,15 @@ export function useThemeColor(
   }
 }*/
 
-type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark' ;
 
 export function useThemeColors(overrides?: Partial<Record<keyof typeof Colors.light, string>>) {
-  const theme: Theme = useColorScheme() ?? 'light';
+  const theme:any =useUserStore(state=>state.theme)
+    const theme2: Theme = theme==='default'?useColorScheme() :theme
+  
+  //const theme: Theme = useColorScheme() ?? 'light';
 
-  const themeColors = Colors[theme];
+  const themeColors = Colors[theme2];
 
   if (!overrides) return themeColors;
 

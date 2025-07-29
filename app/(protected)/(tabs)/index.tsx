@@ -8,13 +8,16 @@ import { BellIcon, CalendarIcon, FigmaLogoIcon, GithubLogoIcon, GoogleDriveLogoI
 import IconContainer from '@/components/ui/IconContainer'
 import Rive, { Fit, RiveRef } from 'rive-react-native'
 import { useThemeColors } from '@/hooks/useThemeColor'
-import { router } from 'expo-router'
+import { Href, router } from 'expo-router'
+import { ExternalLink } from '@/components/ExternalLink'
+import { useTeamStore } from '@/store/useTeamStore'
 
 const index = () => {
   const riveRocketRef = useRef<RiveRef>(null)
   const colors = useThemeColors()
   const [search, setSearch] = useState("")
   const { width } = Dimensions.get("window")
+  const teamDrive= useTeamStore(state=>state.teamDrive)
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.gradientMiddle, flex: 1 }}>
@@ -60,11 +63,11 @@ const index = () => {
 
           {/* Icon Group 1 */}
           <View style={styles.iconSet}>
-            <IconContainer onPress={() => router.push("/(protected)/(otherScreens)/createCall")}>
+            <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/createCall")}>
               <VideoCameraIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary, textAlign: 'center' }}>Create{"\n"}Meeting</Text>
             </IconContainer>
-            <IconContainer onPress={() => router.push("/(protected)/(otherScreens)/joinCall")}>
+            <IconContainer onPress={()=>router.push("/(protected)/(otherScreens)/joinCall")}>
               <VideoConferenceIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary, textAlign: 'center' }}>Join{"\n"}Meeting</Text>
             </IconContainer>
@@ -72,15 +75,15 @@ const index = () => {
 
           {/* Icon Group 2 */}
           <View style={styles.iconSet}>
-            <IconContainer onPress={() => router.push("/")}>
+            <IconContainer onPress={()=>router.push("/")}>
               <CalendarIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary }}>Calendar</Text>
             </IconContainer>
-            <IconContainer onPress={() => router.push("/")}>
+            <IconContainer onPress={()=>router.push("/")}>
               <GithubLogoIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary }}>Github</Text>
             </IconContainer>
-            <IconContainer onPress={() => router.push("/")}>
+            <IconContainer onPress={()=>router.push("/")}>
               <SlackLogoIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary }}>Schedule</Text>
             </IconContainer>
@@ -89,18 +92,21 @@ const index = () => {
           {/* Third Icon set – Tools/Apps */}
           <View style={[styles.toolsContainer, { backgroundColor: colors.surface }]}>
             {[
-              "5WMku3i3tES6",
-              "ya4CrqO7PgnY",
-              "30465",
-              "F6H2fsqXKBwH",
-              "zfHRZ6i1Wg0U"
-            ].map((id) => (
-              <Image
-                key={id}
+              {"id":"5WMku3i3tES6","href":"https://www.trello.com"},
+              {"id":"ya4CrqO7PgnY","href":teamDrive?teamDrive:"https://drive.google.com"},
+              {"id":"30465","href":"https://docs.google.com/document"},
+              {"id":"F6H2fsqXKBwH","href":"https://www.notion.so"},
+              {"id":"zfHRZ6i1Wg0U","href":"https://www.figma.com"}
+            ].map((item) => (
+              <ExternalLink key={item.id} href={item.href}> 
+                             <Image
+                
                 style={styles.toolIcon}
                 resizeMode='contain'
-                source={{ uri: `https://img.icons8.com/?size=100&id=${id}&format=png&color=000000` }}
+                source={{ uri: `https://img.icons8.com/?size=100&id=${item.id}&format=png&color=000000` }}
               />
+              </ExternalLink>
+
             ))}
           </View>
 

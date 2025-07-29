@@ -119,7 +119,8 @@ catch(e){
     pickImage,
     takePhoto,
     uploadImage,
-    downloadImage
+    downloadImage,
+    imageUri
     }
   );
 }

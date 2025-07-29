@@ -33,12 +33,15 @@ import { router } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useImageUpload } from '@/hooks/uploadImage';
 
 const { width } = Dimensions.get('window');
+
 
 const Profile = () => {
   const colors = useThemeColors();
   const fadeAnim = useSharedValue(0);
+  const {downloadImage,imageUri,pickImage}=useImageUpload()
   const scaleAnim = useSharedValue(0.9);
   const token = useAuthStore((state) => state.token);
   const setToken = useAuthStore((state) => state.setToken);
@@ -56,6 +59,12 @@ const Profile = () => {
       damping: 8,
       stiffness: 80,
     });
+  }, []);
+   useEffect(() => {
+    const setUpImage=async()=>{
+      await downloadImage()
+    }
+    setUpImage()
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -77,9 +86,9 @@ const Profile = () => {
       {/* Info Container */}
       <Animated.View style={[animatedStyle, styles.animatedContainer]}>
         {/* Banner Image with Camera Icon */}
-        <TouchableOpacity style={styles.imageWrapper}>
+        <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
           <Image
-            source={{ uri: 'https://i.pravatar.cc/300' }}
+            source={{ uri:imageUri? imageUri:'https://i.pravatar.cc/300' }}
             style={styles.profileImage}
           />
           <View style={styles.cameraIcon}>
@@ -128,6 +137,7 @@ const Profile = () => {
         {
           icon: <GearIcon size={24} color={colors.iconColor} />,
           label: 'Settings & Privacy',
+          action:()=>router.push("/(protected)/(otherScreens)/settings")
         },
         {
           icon: <PhoneCallIcon size={24} color={colors.iconColor} />,
