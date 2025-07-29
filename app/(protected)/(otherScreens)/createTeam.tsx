@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert, Animated, Dimensions } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert, Animated, Dimensions, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import { useTheme } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
@@ -111,11 +111,12 @@ const CreateTeam = () => {
   }
 
   return (
+    <KeyboardAvoidingView behavior={Platform.OS==="android"?'height':'padding'} style={{flex:1}}>
     <ScrollView showsVerticalScrollIndicator={false}  style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={[colors.gradientStart, colors.gradientMiddle,colors.gradientEnd]}
         start={{x:0,y:0}}
-        end ={{x:1,y:0}}
+        end ={{x:1,y:1}}
         style={styles.headerGradient}
       />
       <Animated.View 
@@ -249,6 +250,7 @@ const CreateTeam = () => {
         </TouchableOpacity>
       </Animated.View>
     </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -260,6 +262,7 @@ const styles = StyleSheet.create({
   headerGradient: {
     height: 120,
     width: '100%',
+    marginBottom:50
   },
   header: {
     flexDirection: 'row',

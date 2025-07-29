@@ -2,8 +2,6 @@ import { View, Text, TouchableOpacity, Dimensions, StyleSheet, Image, TextInput,
 import React, { useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MovingImages from '@/components/ui/MarqueeComponent'
-import { useUserStore } from '@/store/useUserStore'
-import Header from '@/components/ui/WorkScreenHeader'
 import { BellIcon, CalendarIcon, FigmaLogoIcon, GithubLogoIcon, GoogleDriveLogoIcon, MagnifyingGlassIcon, NotionLogoIcon, SlackLogoIcon, VideoCameraIcon, VideoConferenceIcon } from 'phosphor-react-native'
 import IconContainer from '@/components/ui/IconContainer'
 import Rive, { Fit, RiveRef } from 'rive-react-native'
@@ -17,7 +15,7 @@ const index = () => {
   const colors = useThemeColors()
   const [search, setSearch] = useState("")
   const { width } = Dimensions.get("window")
-  const teamDrive= useTeamStore(state=>state.teamDrive)
+  const teamDrive= useTeamStore(state=>state.drive)
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.gradientMiddle, flex: 1 }}>
