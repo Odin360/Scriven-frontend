@@ -180,5 +180,8 @@ dependencies {
         implementation jscFlavor
     }
 }
+<<<<<<< HEAD
 
 apply plugin: 'com.google.gms.google-services'
+=======
+>>>>>>> a5bfa553510edc1c36069bff6f7da025ff0ab46a
