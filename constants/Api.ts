@@ -1,0 +1,1 @@
+export const BASEURL = "https://scriven-app.onrender.com/api/v1"
