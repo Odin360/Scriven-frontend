@@ -64,10 +64,14 @@ const theme:DeepPartial<Theme> = {
        chevronColor:colors.iconColor
   }
  },
+
  messageInput:{
   inputBoxContainer:{
     backgroundColor:colors.border,
     borderColor:colors.border
+  },
+  inputBox:{
+color:colors.textPrimary
   },
   container:{
     backgroundColor:colors.surface
@@ -98,7 +102,8 @@ const theme:DeepPartial<Theme> = {
   },
   container:{
     backgroundColor:colors.background
-  }
+  },
+  maskFillColor:colors.gradientMiddle
  },
  channelListLoadingIndicator:{
   container:{

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useCallStateHooks } from "@stream-io/video-react-bindings";
-import { ClockIcon } from "phosphor-react-native";
+import { ClockIcon, VideoConferenceIcon } from "phosphor-react-native";
 
 const formatTime = (seconds: number) => {
   const date = new Date(0);
@@ -44,7 +44,7 @@ export default function CallDurationBadge ()  {
 
   return (
     <View style={{flexDirection:"row",gap:5,alignItems:"center",justifyContent:"center"}}>
-      <ClockIcon
+      <VideoConferenceIcon
       weight="duotone"
       duotoneColor="blue"
         color={"white"}

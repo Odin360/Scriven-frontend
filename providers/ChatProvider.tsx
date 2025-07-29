@@ -1,56 +1,61 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { ChannelData, OwnUserResponse, StreamChat, UserResponse } from "stream-chat";
 import { Chat } from "stream-chat-expo";
 import { ActivityIndicator, View } from "react-native";
 import { useUserStore } from "@/store/useUserStore";
-import { useAuthStore } from "@/store/useAuthStore";
-import axios from "axios";
-import { BASEURL } from "@/constants/Api";
 
 
+export const apiKey = "kcghu45jpmy8";
 
 
-
-export const apiKey = "kcghu45jpmy8"
-    const api_secret = "uwjw9yjzke9nvhxp5ryrcs9epf82n66bf795x54dy66h8e3jy4bj7npgf892twtv"
 export default function ChatProvider({ children }: PropsWithChildren) {
   const [chatClient, setChatClient] = useState<StreamChat | null>(null);
-  /*const token = useAuthStore(state=>state.token)*/
-  const userName = useUserStore(state=>state.username)
-
-  const userId = useUserStore(state=>state.id)
+  const userName = useUserStore(state => state.username);
+  const userId = useUserStore(state => state.id);
   
-if(!userId){return}
-  const user:UserResponse | OwnUserResponse|any = { id: userId, name: userName };
- 
-
+const isMounted = useRef(true)
   useEffect(() => {
+    isMounted.current = true
+
     const initChat = async () => {
-        try{
-      const client = StreamChat.getInstance(apiKey);
-   
-     
-      await client.connectUser(user,client.devToken(userId))
-      .then(async()=>{
-         const channel = client.channel('messaging', {
-          members:[userId,"Maya-v2"]
-         });
-await channel.watch();
-      })
-      setChatClient(client);}
-      catch(e){
-        console.log(e)
+      if (!userId || !userName) return;
+
+      try {
+        const client = StreamChat.getInstance(apiKey);
+
+        await client.connectUser(
+          { id: userId, name: userName },
+          client.devToken(userId)
+        );
+
+        if (!isMounted.current) return;
+
+        const channel = client.channel("messaging", {
+          members: [userId, "Maya-v2"],
+        });
+
+        await channel.watch();
+
+        if (isMounted.current) {
+          setChatClient(client);
+        }
+      } catch (e) {
+        console.error("Retrying chat connection in 2s:", e);
+        setTimeout(() => {
+          if (isMounted.current) initChat();
+        }, 2000);
       }
     };
 
     initChat();
 
     return () => {
+      isMounted.current=false;
       if (chatClient) {
         chatClient.disconnectUser();
       }
     };
-  }, []);
+  }, [userId, userName]);
 
   if (!chatClient) {
     return (
@@ -59,8 +64,6 @@ await channel.watch();
       </View>
     );
   }
- 
 
-
-  return <Chat client={chatClient} >{children}</Chat>;
+  return <Chat client={chatClient} isMessageAIGenerated={(message:any)=>!!message.ai_generated}>{children}</Chat>;
 }

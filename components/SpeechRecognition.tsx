@@ -41,21 +41,6 @@ const OndeviceSpeechRecognition=()=>{
     handleStop,
     setTranscript
   })
-  /*return (
-    <View>
-      {!recognizing ? (
-        <Button title="Start" onPress={handleStart} />
-      ) : (
-        <Button
-          title="Stop"
-          onPress={() => ExpoSpeechRecognitionModule.stop()}
-        />
-      )}
-
-      <ScrollView>
-        <Text>{transcript}</Text>
-      </ScrollView>
-    </View>
-  );*/
+ 
 }
 export const useSpeechRecognition =()=> OndeviceSpeechRecognition();

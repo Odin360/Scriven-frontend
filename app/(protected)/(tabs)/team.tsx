@@ -17,15 +17,17 @@ import { router } from 'expo-router';
 import { useThemeColors } from '@/hooks/useThemeColor';
 import { CaretRightIcon, QrCodeIcon, UsersIcon, UsersThreeIcon } from 'phosphor-react-native';
 import ScreenHeader from '@/components/ui/ScreenHeaders';
+import { useTeamStore } from '@/store/useTeamStore';
 
-const uuid = '123e4567-e89b-12d3-a456-426614174000';
+
 const { width } = Dimensions.get('window');
 
 const Team = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [visible, setVisible] = useState(false);
   const  colors  = useThemeColors();
-
+ const teamId = useTeamStore(state=>state.id)
+ 
   
 
   const HandleScanQrCode = () => {
@@ -89,7 +91,7 @@ const Team = () => {
         {/* QR Code View */}
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ borderColor: colors.border, borderWidth: 1 }}>
-            <QrCode uuid={uuid} size={200} />
+           {teamId ? <QrCode uuid={teamId} size={200} />:<Text>You've not joined anyteam yet</Text>}
           </View>
         </View>
       </View>

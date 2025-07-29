@@ -1,8 +1,10 @@
-import tools from '@/Utils/tools';
+"use dom";
+
+import { useConversation } from '@elevenlabs/react';
+import { MicrophoneIcon} from "phosphor-react-native"
 import { useCallback } from 'react';
-import {useConversation} from "@elevenlabs/react"
-import { Pressable, View,StyleSheet } from 'react-native';
-import { MicrophoneIcon } from 'phosphor-react-native';
+import { View, Pressable,StyleSheet,PermissionsAndroid,Platform } from 'react-native';
+import tools from '@/Utils/tools';
 
 async function requestMicrophonePermission() {
   try {
@@ -15,16 +17,12 @@ async function requestMicrophonePermission() {
   }
 }
 
-
-
 export default function ConvAiDOMComponent({
-  platform,
   get_battery_level,
   change_brightness,
   flash_screen,
 }: {
   dom?: import('expo/dom').DOMProps;
-  platform: string;
   get_battery_level: typeof tools.get_battery_level;
   change_brightness: typeof tools.change_brightness;
   flash_screen: typeof tools.flash_screen;
@@ -48,26 +46,24 @@ export default function ConvAiDOMComponent({
 
       // Start the conversation with your agent
       await conversation.startSession({
-        agentId: 'YOUR_AGENT_ID', // Replace with your agent ID
-        dynamicVariables: {
-          platform,
-        },
+        agentId: 'agent_01jzzjh21wffdbf163fvzaa1m0',
+        connectionType:"webrtc", // Replace with your agent ID,
         clientTools: {
           get_battery_level,
           change_brightness,
           flash_screen,
-        },
+        }
       });
     } catch (error) {
       console.error('Failed to start conversation:', error);
     }
   }, [conversation]);
 
-    const stopConversation = useCallback(async () => {
+  const stopConversation = useCallback(async () => {
     await conversation.endSession();
   }, [conversation]);
 
-    return (
+  return (
     <Pressable
       style={[styles.callButton, conversation.status === 'connected' && styles.callButtonActive]}
       onPress={conversation.status === 'disconnected' ? startConversation : stopConversation}
@@ -78,11 +74,12 @@ export default function ConvAiDOMComponent({
           conversation.status === 'connected' && styles.buttonInnerActive,
         ]}
       >
-        <MicrophoneIcon size={32} color="#E2E8F0" weight='bold' style={styles.buttonIcon} />
+        <MicrophoneIcon size={32} color="#E2E8F0" weight = "fill" style={styles.buttonIcon} />
       </View>
     </Pressable>
   );
 }
+
 const styles = StyleSheet.create({
   callButton: {
     width: 120,
@@ -120,6 +117,3 @@ const styles = StyleSheet.create({
     transform: [{ translateY: 2 }],
   },
 });
-  //...
-
-// ...

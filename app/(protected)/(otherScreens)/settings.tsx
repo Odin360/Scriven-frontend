@@ -1,11 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity, TextInput, Switch, StyleSheet, Dimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useTheme } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { useThemeColors } from '@/hooks/useThemeColor'
 import {GearIcon,PasswordIcon,UsersIcon,LightbulbIcon,SignOutIcon,MoonIcon,SunIcon, MailboxIcon,ArrowLeftIcon,PersonSimpleCircleIcon,PersonSimpleIcon } from 'phosphor-react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useUserStore } from '@/store/useUserStore'
 
 
 const Settings = () => {
@@ -16,6 +15,8 @@ const Settings = () => {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isLightMode, setIsLightMode] = useState(false)
   const [isDefaultMode, setIsDefaultMode] = useState(true)
+  const setTheme=useUserStore(state=>state.setTheme)
+  const theme=useUserStore(state=>state.theme)
 const colors = useThemeColors()
   const handleUpdateProfile = () => {
     // Implement profile update logic
@@ -28,10 +29,11 @@ const colors = useThemeColors()
   }
 
   const handleThemeChange = (mode: string) => {
-    setIsDarkMode(mode === 'dark')
-    setIsLightMode(mode === 'light')
-    setIsDefaultMode(mode === 'default')
+   // setIsDarkMode(mode === 'dark')
+   // setIsLightMode(mode === 'light')
+   // setIsDefaultMode(mode === 'default')
     // Implement theme change logic
+    setTheme(mode)
   }
 
   return (
@@ -119,7 +121,7 @@ const colors = useThemeColors()
               <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Dark Mode</Text>
             </View>
             <Switch
-              value={isDarkMode}
+              value={theme==="dark"}
               onValueChange={() => handleThemeChange('dark')}
               trackColor={{ false: colors.border, true: colors.primaryButton }}
             />
@@ -131,7 +133,7 @@ const colors = useThemeColors()
               <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Light Mode</Text>
             </View>
             <Switch
-              value={isLightMode}
+              value={theme==="light"}
               onValueChange={() => handleThemeChange('light')}
               trackColor={{ false: colors.border, true: colors.primaryButton }}
             />
@@ -143,7 +145,7 @@ const colors = useThemeColors()
               <Text style={[styles.themeLabel, { color: colors.textPrimary, marginLeft: 8 }]}>Default Mode</Text>
             </View>
             <Switch
-              value={isDefaultMode}
+              value={theme==="default"}
               onValueChange={() => handleThemeChange('default')}
               trackColor={{ false: colors.border, true: colors.primaryButton }}
             />

@@ -12,13 +12,13 @@ import * as Speech from "expo-speech"
 import { useThemeColors } from '@/hooks/useThemeColor';
 import axios from 'axios';
 import { BASEURL } from '@/constants/Api';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useAuthStore} from '@/store/useAuthStore';
+import { useTeamStore } from '@/store/useTeamStore';
 import { useUserStore } from '@/store/useUserStore';
 
 
-
 export default function TabLayout() {
-  
+  const teamId = useTeamStore(state=>state.id)   
   const colorScheme = useColorScheme();
   const colors  = useThemeColors();
   const [microphoneState,setMicrophoneState]=useState<IconProps>({color:colors.iconColor,weight:"thin"})
@@ -41,12 +41,22 @@ useEffect(()=>{
   if(!recognizing && transcript){
     try{
     setSpeaking(true)
-    await axios.get(`${BASEURL}/ai/${userId}/voiceAi?prompt=${encodeURIComponent(transcript)}`,{headers:{"Authorization":`Bearer ${token}`}})
-    .then(({data})=>{
+    if(teamId)
+    {
+      await axios.get(`${BASEURL}/ai/${userId}/${teamId}/voiceAi?prompt=${encodeURIComponent(transcript)}`,{headers:{"Authorization":`Bearer ${token}`}})
+     .then(({data})=>{
        Speech.speak(data)
     setSpeaking(false)   
    setInterval(()=>setTranscript(""),3000)
-    }) }
+    })}
+    else{
+     await axios.get(`${BASEURL}/ai/${userId}/voiceAi?prompt=${encodeURIComponent(transcript)}`,{headers:{"Authorization":`Bearer ${token}`}})
+     .then(({data})=>{
+       Speech.speak(data)
+    setSpeaking(false)   
+   setInterval(()=>setTranscript(""),3000)
+    })
+    }}
     catch(e){
       Alert.alert("Rating limit","You've hit your rating limit with Maya,wait for a minute and try again")
       setInterval(()=>setTranscript(""),3000)

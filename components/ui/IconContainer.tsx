@@ -1,12 +1,14 @@
 import { StyleSheet, TouchableOpacity,Dimensions } from 'react-native'
 import React from 'react'
 import { useThemeColors } from '@/hooks/useThemeColor'
+import { ExternalLink } from '../ExternalLink'
+import { Href } from 'expo-router'
 const {width} = Dimensions.get("window")
 
 const IconContainer = ({children,onPress}:{children:React.ReactNode,onPress:any}) => {
     const colors =useThemeColors() 
     return (
-    <TouchableOpacity style={[styles.container,{borderColor:colors.iconColor,backgroundColor:colors.surface}]} onPress={onPress}>
+    <TouchableOpacity onPress={()=>onPress} style={[styles.container,{borderColor:colors.iconColor,backgroundColor:colors.surface}]}>
       {children}
     </TouchableOpacity>
     

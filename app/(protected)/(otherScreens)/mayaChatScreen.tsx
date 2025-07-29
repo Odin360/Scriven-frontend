@@ -1,6 +1,6 @@
-import { View, Text, ActivityIndicator,StyleSheet } from 'react-native'
+import { View, Text, ActivityIndicator,StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useEffect } from 'react'
-import { Channel, MessageInput, MessageList, useChatContext } from 'stream-chat-expo'
+import { AITypingIndicatorView, Channel, MessageInput, MessageList, useChatContext } from 'stream-chat-expo'
 import { useAppContext } from '@/providers/AppContext'
 import { router } from 'expo-router'
 import { Ionicons,Feather } from '@expo/vector-icons'
@@ -10,16 +10,21 @@ import { useUserStore } from '@/store/useUserStore'
 import axios from 'axios'
 import { BASEURL } from '@/constants/Api'
 import { useAuthStore } from '@/store/useAuthStore'
+import { useTeamStore } from '../../../store/useTeamStore'
+import { useThemeColors } from '@/hooks/useThemeColor'
+import { LinearGradient } from 'expo-linear-gradient'
+import { ArrowLeftIcon } from 'phosphor-react-native'
 
 
 const mayaChatScreen = () => {
   const userId = useUserStore(state=>state.id)
+  const teamId = useTeamStore(state=>state.id)
   const token =useAuthStore(state=>state.token)
-    const {colors}=useTheme()
+    const colors = useThemeColors()
     const {channel:mayaChannel}:any=useAppContext()
     
     if(!userId)return
-    /*const mayaChannel = client.channel("messaging",{members:[userId,"Maya-Ai"]})*/
+   
 
     useEffect(()=>{
     const HandleMessage=async(event:any)=>{
@@ -30,8 +35,15 @@ const mayaChatScreen = () => {
          
  if(message&&message.text&&message.text.trim()!==""&&message.user.id===userId){
          console.log(mayaChannel.id)
-try{
-  await axios.get(`${BASEURL}/ai/${mayaChannel.id}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+try{if(teamId){
+  console.log("team available")
+  await axios.get(`${BASEURL}/ai/${mayaChannel.id}/${userId}/${teamId}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+}
+else{
+   console.log("team not available")
+   await axios.get(`${BASEURL}/ai/${mayaChannel.id}/${userId}/askAi?prompt=${encodeURIComponent(message.text)}`,{headers:{"Authorization":`Bearer ${token}`}})
+}
+
 }
 catch(e){
   console.log(e)
@@ -47,19 +59,23 @@ return()=>{mayaChannel.off('message.new',HandleMessage)}
             </View>
         )
     }
+    const {width}=Dimensions.get("window")
   return (<>
-    <SafeAreaView style={{flex:1,paddingBottom:10}}>
-     
-      <Channel channel={mayaChannel} audioRecordingEnabled>
-         <View style={{alignItems:'center',flexDirection:"row",justifyContent: 'space-between',borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:colors.primary,height:50,padding:10}}>
-        <Ionicons name="arrow-back-sharp" size={24} color="black" onPress={()=>router.back()} />
-            <Text style={{fontWeight:"bold",color:colors.text}}>Maya</Text>
-            <Feather name="more-vertical" size={24} color="black" />
-        </View>
+    
+       <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS==="android"?"height":"padding"}>
+      <Channel channel={mayaChannel}  isMessageAIGenerated={(message:any)=>!!message.ai_generated}>
+         <LinearGradient start={{x:0,y:0}} end={{x:1,y:1}} colors={[colors.gradientStart,colors.gradientMiddle,colors.gradientEnd]} style={{alignItems:'center',flexDirection:"row",borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:colors.border,height:width*0.2,padding:10,gap:20}}>
+        <TouchableOpacity onPress={()=>router.back()}>
+        <ArrowLeftIcon size={24} color={colors.iconColor} weight='fill' />
+            </TouchableOpacity>
+            <Text style={{fontWeight:"bold",color:colors.textPrimary}}>Maya</Text>
+        </LinearGradient>
         <MessageList/>
+        <AITypingIndicatorView/>
         <MessageInput/>
       </Channel>
-      </SafeAreaView>
+        </KeyboardAvoidingView>
+      
       </>
   )
 }
