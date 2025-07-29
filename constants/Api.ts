@@ -1,1 +1,1 @@
-export const BASEURL = "http://192.168.234.41:8080/api/v1"
+export const BASEURL = "https://scriven-app.onrender.com/api/v1"

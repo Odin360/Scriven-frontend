@@ -21,7 +21,8 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
-      "package": "com.williamboy868.Scriven"
+      "package": "com.williamboy868.Scriven",
+      "googleServicesFile":"./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -105,13 +106,17 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+       "@react-native-firebase/app",
+      "@react-native-firebase/messaging"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {},
+      "router": {
+        "origin":false
+      },
       "eas": {
         "projectId": "6833f217-2f9a-4b54-b041-4f79abe617fd"
       }

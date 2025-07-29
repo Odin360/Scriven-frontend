@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "445399571758",
+    "project_id": "scriven-e825e",
+    "storage_bucket": "scriven-e825e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445399571758:android:ce0026a7cb015bc08d6ebf",
+        "android_client_info": {
+          "package_name": "com.williamboy868.Scriven"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3guvmiY-3Pr2lasnQO2By-gDp9LmjNdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

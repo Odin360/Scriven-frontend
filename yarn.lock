@@ -802,17 +802,10 @@
   dependencies:
     livekit-client "^2.11.4"
 
-<<<<<<< HEAD
-"@elevenlabs/react@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@elevenlabs/react/-/react-0.3.0.tgz#d5ec68f744d3f3ab21984c16bbb1a0374b7d31f4"
-  integrity sha512-7FgPsP1hHwH2sXJI/J6kTYeixqsD/X7EYRN+K82q/H+n3T0GZ+cD6z4uv2BOXbnOTGWBnsqhk39auDXa3EvXSQ==
-=======
 "@elevenlabs/react@^0.4.1":
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/@elevenlabs/react/-/react-0.4.1.tgz#bf6acfa5607a513b3643e37bf8cdaa6e099e1709"
   integrity sha512-Y3zc78nq0BU7yT/xcnnB0a+EagOAeb3OTAPaU3tgPiQLBwcPJAUUXOaP2ta0gI++Nuqt/zLltuHoaLw1aEe9cg==
->>>>>>> c59e51f34f2bef3870757df09ba14ab73c5f2cb0
   dependencies:
     "@elevenlabs/client" "0.4.1"
 
