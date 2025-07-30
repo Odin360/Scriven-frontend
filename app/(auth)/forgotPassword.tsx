@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Axios from 'axios'
 import { BASEURL } from '@/constants/Api';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useThemeColors } from '@/hooks/useThemeColor';
 
 const ForgotPasswordScreen = () => {
   const setEmail = useAuthStore(state=>state.setEmail)
@@ -40,10 +41,10 @@ const spaces = width * 0.08
       console.log(e)
     }
   }
-
+const colors=useThemeColors()
   return (<>
          <Stack.Screen options={{headerShown:false}}/>  
-    <LinearGradient colors={Colors.light.gradientBackground} style={styles.gradient}>
+    <LinearGradient colors={[colors.gradientMiddle,colors.background]} style={styles.gradient}>
       <SafeAreaView style={styles.safeArea}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView

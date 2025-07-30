@@ -1,42 +1,27 @@
-/**
- * Learn more about light and dark modes:
- * https://docs.expo.dev/guides/color-schemes/
- */
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useUserStore } from '@/store/useUserStore';
 
-/*
+type Theme = 'light' | 'dark' | 'default';
 
-export function useThemeColor(
-  props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+export function useThemeColors(
+  overrides?: Partial<Record<keyof typeof Colors.light, string>>
 ) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
+  // Get user's preferred theme from the store
+  const storedTheme = useUserStore(state => state.theme);
 
-  if (colorFromProps) {
-    return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
-  }
-}*/
+  // Fallback to system theme if 'default' is selected
+  const systemTheme: Theme = useColorScheme() ?? 'light';
 
-type Theme = 'light' | 'dark' ;
+  // Resolve final theme value
+  const resolvedTheme = (storedTheme === 'default' ? systemTheme : storedTheme) as 'light' | 'dark';
 
-export function useThemeColors(overrides?: Partial<Record<keyof typeof Colors.light, string>>) {
-  const theme:any =useUserStore(state=>state.theme)
-    const theme2: Theme = theme==='default'?useColorScheme() :theme
-  
-  //const theme: Theme = useColorScheme() ?? 'light';
+  // Safeguard against invalid theme keys
+  const themeColors = Colors[resolvedTheme] ?? Colors.light;
 
-  const themeColors = Colors[theme2];
-
-  if (!overrides) return themeColors;
-
+  // Apply overrides if provided
   return {
     ...themeColors,
-    ...overrides, // your manual overrides take precedence
+    ...(overrides ?? {})
   };
 }
-

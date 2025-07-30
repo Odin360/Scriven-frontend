@@ -11,7 +11,7 @@ export const CustomCallRecordButton = () => {
   const isCallRecordingInProgress = useIsCallRecordingInProgress();
   const [isAwaitingResponse, setIsAwaitingResponse] = useState(false);
 
-  useEffect(() => {
+     useEffect(() => {
     if (!call) {
       return;
     }
@@ -27,21 +27,7 @@ export const CustomCallRecordButton = () => {
     };
   }, [call]);
   
-  useEffect(()=>{
-   if(!call){
-    return
-   }
-    
-    const getRecording = async()=>{const recordings = await call.queryRecordings()
-      console.log(recordings)
-      return recordings
-    }
-  const unsuscribe= call.on("call.recording_ready",()=>getRecording())
-  return () => {
-    unsuscribe()
-      };
-  
-  },[call])
+ 
   
 
   const toggleRecording = useCallback(async () => {

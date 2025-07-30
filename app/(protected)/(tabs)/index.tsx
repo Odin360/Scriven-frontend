@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Dimensions, StyleSheet, Image, TextInput,
 import React, { useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MovingImages from '@/components/ui/MarqueeComponent'
-import { BellIcon, CalendarIcon, FigmaLogoIcon, GithubLogoIcon, GoogleDriveLogoIcon, MagnifyingGlassIcon, NotionLogoIcon, SlackLogoIcon, VideoCameraIcon, VideoConferenceIcon } from 'phosphor-react-native'
+import { BellIcon, CalendarIcon, FigmaLogoIcon, GithubLogoIcon, GoogleDriveLogoIcon, MagnifyingGlassIcon, NotionLogoIcon, SlackLogoIcon, VideoCameraIcon, VideoConferenceIcon, XCircleIcon } from 'phosphor-react-native'
 import IconContainer from '@/components/ui/IconContainer'
 import Rive, { Fit, RiveRef } from 'rive-react-native'
 import { useThemeColors } from '@/hooks/useThemeColor'
@@ -70,6 +70,11 @@ useEffect(() => {
     setLoading(false);
   }
 };
+const handleClearSearch = () => {
+  setSearch("");
+  setSearchResult(null);
+  setHasSearched(false);
+};
 
 
   return (
@@ -102,7 +107,28 @@ useEffect(() => {
         </View>
 
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          
+          {hasSearched && (
+  <TouchableOpacity 
+    onPress={handleClearSearch} 
+    style={{ 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      alignSelf: 'flex-end',
+      marginRight: 20, 
+      marginBottom: 10 
+    }}
+  >
+    <XCircleIcon size={20} color={colors.primaryButton} weight='duotone' />
+    <Text style={{ 
+      color: colors.primaryButton, 
+      fontWeight: 'bold', 
+      marginLeft: 6 
+    }}>
+      Clear Search
+    </Text>
+  </TouchableOpacity>
+)}
+
           {/* AI Result or Rive animation */}
          {loading ? (
   <View style={styles.loaderContainer}>
@@ -143,24 +169,13 @@ useEffect(() => {
               <VideoConferenceIcon color={colors.iconColor} weight='fill' />
               <Text style={{ color: colors.textPrimary, textAlign: 'center' }}>Join{"\n"}Meeting</Text>
             </IconContainer>
-          </View>
-
-          {/* Icon Group 2 */}
-          <View style={styles.iconSet}>
-            <IconContainer onPress={() => router.push("/")}>
-              <CalendarIcon color={colors.iconColor} weight='fill' />
-              <Text style={{ color: colors.textPrimary }}>Calendar</Text>
-            </IconContainer>
-            <IconContainer onPress={() => router.push("/")}>
-              <GithubLogoIcon color={colors.iconColor} weight='fill' />
-              <Text style={{ color: colors.textPrimary }}>Github</Text>
-            </IconContainer>
-            <IconContainer onPress={() => router.push("/")}>
+            <IconContainer onPress={() => router.push("/summary")}>
               <SlackLogoIcon color={colors.iconColor} weight='fill' />
-              <Text style={{ color: colors.textPrimary }}>Schedule</Text>
+              <Text style={{ color: colors.textPrimary }}>Summary</Text>
             </IconContainer>
           </View>
 
+  
           {/* Tools/Apps */}
           <View style={[styles.toolsContainer, { backgroundColor: colors.surface }]}>
             {[

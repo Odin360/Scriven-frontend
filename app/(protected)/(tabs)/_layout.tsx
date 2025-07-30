@@ -15,6 +15,8 @@ import { BASEURL } from '@/constants/Api';
 import { useAuthStore} from '@/store/useAuthStore';
 import { useTeamStore } from '@/store/useTeamStore';
 import { useUserStore } from '@/store/useUserStore';
+import { useChatContext } from 'stream-chat-expo';
+import { useAppContext } from '@/providers/AppContext';
 
 
 export default function TabLayout() {
@@ -28,6 +30,9 @@ export default function TabLayout() {
   const token = useAuthStore(state=>state.token)
   const userId = useUserStore(state=>state.id)
   const [speaking,setSpeaking]=useState(false)
+ const {client}=useChatContext()
+ const unread = client.getUnreadCount(userId)
+ 
   
   const snapPoints = useMemo(() => ['25%'], []);
 
@@ -79,7 +84,7 @@ useEffect(()=>{
       <Tabs.Screen
         name="talk"
         options={{
-          tabBarBadge: "2",
+          tabBarBadge:"",
           title: 'Chat',
           tabBarIcon: ({ color, size, focused }) => (
             <ChatCircleIcon  

@@ -89,7 +89,7 @@ const SignIn = () => {
       <ImageBackground
          source={{ uri:"https://images.unsplash.com/photo-1637825891028-564f672aa42c?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVycGxlJTIwYWJzdHJhY3R8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000"}}
         resizeMode="cover"
-        style={{ flex: 1 }}
+        style={{ flex: 1,backgroundColor:"purple" }}
         blurRadius={10}
       >
         
@@ -115,62 +115,20 @@ const SignIn = () => {
                   elevation: 5,
                 }}>
 
-                  {/* Social Login */}
-                  <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 10 }}>
-                    <TouchableOpacity style={{
-                      flexDirection: "row",
-                      backgroundColor: "#fff",
-                      paddingVertical: 12,
-                      paddingHorizontal: 15,
-                      borderRadius: 12,
-                      alignItems: "center",
-                      width: width * 0.4,
-                      justifyContent: "center",
-                      marginRight: 10,
-                    }}>
-                      <Entypo name="facebook" size={24} color="#1877F2" />
-                      <Text style={{ paddingLeft: 10, fontWeight: "500" }}>Facebook</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{
-                      flexDirection: "row",
-                      backgroundColor: "#fff",
-                      paddingVertical: 12,
-                      paddingHorizontal: 15,
-                      borderRadius: 12,
-                      alignItems: "center",
-                      width: width * 0.4,
-                      justifyContent: "center",
-                    }}>
-                      <Image
-                        style={{ height: 24, width: 24 }}
-                        source={{ uri: "https://img.icons8.com/color/512/google-logo.png" }}
-                      />
-                      <Text style={{ paddingLeft: 10, fontWeight: "500" }}>Google</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  {/* Divider */}
-                  <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 20 }}>
-                    <View style={{ flex: 1, height: 1, backgroundColor: "#C7D0DB" }} />
-                    <Text style={{ marginHorizontal: 10, color: "#C7D0DB", fontWeight: "500" }}>or</Text>
-                    <View style={{ flex: 1, height: 1, backgroundColor: "#C7D0DB" }} />
-                  </View>
-
                   {/* Email Field */}
                   <Controller
                     name="email"
                     control={control}
                     render={({ field: { value, onChange } }) => (
-                      <View style={{
-                        backgroundColor: "#fff",
-                        borderRadius: 12,
-                        paddingHorizontal: 15,
-                        height: 50,
-                        width: width * 0.9,
-                        justifyContent: "center",
-                        marginBottom: 10,
-                      }}>
+                     <View style={{
+  backgroundColor: "#fff",
+  borderRadius: 12,
+  paddingHorizontal: 15,
+  paddingVertical: 12,
+  width: width * 0.9,
+  justifyContent: "center",
+  marginBottom: 10,
+}}>
                         <TextInput
                           placeholder="Email"
                           value={value}
@@ -192,15 +150,16 @@ const SignIn = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <View style={{
-                        backgroundColor: "#fff",
-                        borderRadius: 12,
-                        paddingHorizontal: 15,
-                        height: 50,
-                        width: width * 0.9,
+                       backgroundColor: "#fff",
+  borderRadius: 12,
+  paddingHorizontal: 15,
+  paddingVertical: 12,
+  width: width * 0.9,
+  justifyContent: "center",
+  marginBottom: 10,
+
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: 10,
                       }}>
                         <TextInput
                           placeholder="Password"
@@ -211,7 +170,7 @@ const SignIn = () => {
                           onBlur={() => riveRef.current?.setInputState("State Machine 1", "IsPassword", false)}
                           onChangeText={onChange}
                           placeholderTextColor={colors.textSecondary}
-                          style={{ fontSize: 16,flex:1 }}
+                          style={{ fontSize: 16,flex:1,color:"black" }}
                         />
                         <TouchableOpacity onPress={() => setHidePassword(!hidePassword)} style={{ paddingLeft: 10 }}>
                           <Feather name={hidePassword ? "eye-off" : "eye"} size={22} color="#777" />
@@ -242,7 +201,7 @@ const SignIn = () => {
 
                   {/* Sign Up Prompt */}
                   <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                    <Text style={[Texts.default, { color: colors.textPrimary }]}>Don't have an account? </Text>
+                    <Text style={[Texts.default, { color: "white" }]}>Don't have an account? </Text>
                     <TouchableOpacity onPress={() => router.push("/(auth)/signUp")}>
                       <Text style={[Texts.default, { color: colors.primaryButton }]}>Sign Up</Text>
                     </TouchableOpacity>

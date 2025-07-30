@@ -13,7 +13,7 @@ export default function CallScreen(){
 
   useEffect(() => {
     return () => {
-      // cleanup the call on unmount if the call was not left already
+  //     cleanup the call on unmount if the call was not left already
       if (call?.state.callingState !== CallingState.LEFT) {
         call?.leave();
       }
@@ -31,7 +31,6 @@ export default function CallScreen(){
     <StreamCall call={call}>          
             <CallHeader>
       <CallDurationBadge/>
-      <CallSummary/>
       </CallHeader>
    <CallContent CallControls={CustomCallControls} onHangupCallHandler={()=>router.back()}/>
     </StreamCall>

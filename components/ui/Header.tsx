@@ -60,30 +60,19 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
                         <Text style={[styles.iconText, { color: colors.textPrimary }]}>Join</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.meetingIconButton}>
-                        <Ionicons name="calendar" size={24} color={colors.iconColor} />
-                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Schedule</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.meetingIconButton}>
                         <Ionicons name="flash" size={24} color={colors.iconColor} />
-                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Flash</Text>
+                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Summary</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.meetingIconButton}>
-                        <Ionicons name="radio" size={24} color={colors.iconColor} />
-                        <Text style={[styles.iconText, { color: colors.textPrimary }]}>Live</Text>
+                                        <TouchableOpacity style={styles.meetingIconButton} onPress={()=>router.push("/(protected)/(otherScreens)/teamMembers")}>
+                        <FontAwesome5 name="teamspeak" size={24} color={colors.iconColor} />
+                         <Text style={[styles.iconText, { color: colors.textPrimary }]}>Members</Text>
                     </TouchableOpacity>
-                </View>
+                    </View>
             </Animated.View>
 
             <Animated.View style={[styles.subHeader,subHeaderStyle]}>
                 <Text style={[styles.subHeaderText, { color: colors.textPrimary }]}>Conversations</Text>
-                <View style={styles.subHeaderIcons}>
-                    <TouchableOpacity style={styles.iconButton} onPress={()=>router.push("/(protected)/(otherScreens)/teamMembers")}>
-                        <FontAwesome5 name="teamspeak" size={24} color={colors.iconColor} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconButton}>
-                        <Ionicons name="notifications" size={24} color={colors.textPrimary} />
-                    </TouchableOpacity>
-                </View>
+                
             </Animated.View>
             </AnimatedLinearGradient>
         </Animated.View>

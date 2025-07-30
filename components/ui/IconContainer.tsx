@@ -8,7 +8,7 @@ const {width} = Dimensions.get("window")
 const IconContainer = ({children,onPress}:{children:React.ReactNode,onPress:any}) => {
     const colors =useThemeColors() 
     return (
-    <TouchableOpacity onPress={()=>onPress} style={[styles.container,{borderColor:colors.iconColor,backgroundColor:colors.surface}]}>
+    <TouchableOpacity onPress={onPress} style={[styles.container,{borderColor:colors.iconColor,backgroundColor:colors.surface}]}>
       {children}
     </TouchableOpacity>
     

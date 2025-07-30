@@ -1,1 +1,1 @@
-export const BASEURL = "https://scriven-app.onrender.com/api/v1"
+export const BASEURL = "https://scriven-latest.onrender.com/api/v1"

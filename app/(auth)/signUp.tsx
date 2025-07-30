@@ -77,7 +77,7 @@ const SignUp = () => {
        <ImageBackground
                source={{ uri:"https://images.unsplash.com/photo-1637825891028-564f672aa42c?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHVycGxlJTIwYWJzdHJhY3R8ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000"}}
               resizeMode="cover"
-              style={{ flex: 1 }}
+              style={{ flex: 1,backgroundColor:"purple" }}
               blurRadius={10}
             >
         <KeyboardAvoidingView
@@ -106,50 +106,7 @@ const SignUp = () => {
                 elevation: 3,
               }}
             >
-              {/* Socials */}
-              <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 16 }}>
-                <TouchableOpacity
-                  style={{
-                    flexDirection: "row",
-                    backgroundColor: "#fff",
-                    padding: 12,
-                    borderRadius: 12,
-                    width: "48%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Entypo name="facebook" size={22} color="blue" />
-                  <Text style={{ paddingLeft: 10 }}>Facebook</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={{
-                    flexDirection: "row",
-                    backgroundColor: "#fff",
-                    padding: 12,
-                    borderRadius: 12,
-                    width: "48%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    style={{ height: 22, width: 22 }}
-                    source={{ uri: "https://img.icons8.com/color/512/google-logo.png" }}
-                  />
-                  <Text style={{ paddingLeft: 10 }}>Google</Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* OR Divider */}
-              <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 16 }}>
-                <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-                <Text style={{ marginHorizontal: 10, color: "#ccc" }}>or</Text>
-                <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-              </View>
-
-              {/* Username */}
+                     
               <Controller
                 name="username"
                 control={control}
@@ -159,7 +116,7 @@ const SignUp = () => {
                       value={value}
                       onChangeText={onChange}
                       placeholder="Username"
-                      placeholderTextColor="#C7D0DB"
+                      placeholderTextColor={colors.textSecondary}
                       style={[inputField,{flex:1}]}
                       onFocus={() => riveRef.current?.setInputState("State Machine 1", "isFocus", true)}
                       onBlur={() => riveRef.current?.setInputState("State Machine 1", "isFocus", false)}
@@ -195,12 +152,12 @@ const SignUp = () => {
                 name="password"
                 control={control}
                 render={({ field: { value, onChange } }) => (
-                  <View style={[inputBox, { flexDirection: "row", alignItems: "center" }]}>
+                  <View style={[inputBox, { flexDirection: "row",flex:1, alignItems: "center" }]}>
                     <TextInput
                       value={value}
                       onChangeText={onChange}
                          placeholderTextColor={colors.textSecondary}
-                      style={[inputField,{color:colors.textPrimary,flex:1}]}
+                      style={[inputField,{color:colors.textPrimary,flex:1,height:50}]}
                       placeholder="Password"
                       secureTextEntry={hidePassword}
                       onFocus={() => riveRef.current?.setInputState("State Machine 1", "IsPassword", true)}
@@ -237,7 +194,7 @@ const SignUp = () => {
 
               {/* Redirect to login */}
               <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 16 }}>
-                <Text style={[Texts.default, { color: colors.textPrimary }]}>
+                <Text style={[Texts.default, { color: "white" }]}>
                   Already have an account?{" "}
                 </Text>
                 <TouchableOpacity onPress={() => router.push("/(auth)/signIn")}>
@@ -258,10 +215,12 @@ const inputBox = {
   paddingHorizontal: 10,
   paddingVertical: 12,
   marginBottom: 12,
+  minHeight: 50,
 };
-
 const inputField = {
   fontSize: 16,
+  color:"black",
+  flex:1
 };
 
 export default SignUp;

@@ -33,7 +33,7 @@ const signedIn = useAuthStore((state)=>state.signedIn)
  })
   return (
   <>
-  <Redirect href={"/(auth)/signIn"}/>
+  {signedIn?<Redirect href={"/(protected)/(tabs)"}/>:<Redirect href={"/onBoarding"}/>}
   <StatusBar hidden={true}/>
   
   <Stack.Screen options={{headerShown:false}}/>
