@@ -59,7 +59,7 @@ export default function Header({ headerHeight, scrollY }: headerProps) {
                         <Ionicons name="enter" size={24} color={colors.iconColor} />
                         <Text style={[styles.iconText, { color: colors.textPrimary }]}>Join</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.meetingIconButton}>
+                    <TouchableOpacity onPress={()=>router.push("/(protected)/(otherScreens)/summary")} style={styles.meetingIconButton}>
                         <Ionicons name="flash" size={24} color={colors.iconColor} />
                         <Text style={[styles.iconText, { color: colors.textPrimary }]}>Summary</Text>
                     </TouchableOpacity>

@@ -23,6 +23,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeftIcon,
   PhoneCallIcon,
+  MessengerLogoIcon
 } from 'phosphor-react-native';
 import { useThemeColors } from '@/hooks/useThemeColor';
 import { useStreamVideoClient } from '@stream-io/video-react-native-sdk';
@@ -83,7 +84,7 @@ const ChatScreen = () => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'android' ? 'height' : 'padding'}
       >
-        <Channel channel={channel} audioRecordingEnabled>
+        <Channel  channel={channel} audioRecordingEnabled>
           <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}

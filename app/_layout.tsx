@@ -41,9 +41,11 @@ const theme:DeepPartial<Theme> = {
   },
   title:{
     color:colors.textPrimary
-  }
+  },
+
  },
  messageList:{
+    
   container:{
     backgroundColor:colors.background
   },
@@ -62,7 +64,13 @@ const theme:DeepPartial<Theme> = {
       backgroundColor:colors.surface,
     },
        chevronColor:colors.iconColor
-  }
+  },
+
+ },
+ emptyStateIndicator:{
+channelContainer:{
+  backgroundColor:colors.background
+}
  },
 
  messageInput:{

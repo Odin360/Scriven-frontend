@@ -29,6 +29,7 @@ import {
   CameraIcon,
 } from 'phosphor-react-native';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useUserStore } from '../../../store/useUserStore';
 import { router } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -71,6 +72,7 @@ const Profile = () => {
     opacity: fadeAnim.value,
     transform: [{ scale: scaleAnim.value }],
   }));
+  const {username,email}=useUserStore()
 
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:colors.background }}>
@@ -99,8 +101,8 @@ const Profile = () => {
         {/* Name and Email */}
         <View style={{flexDirection:"row",marginTop: 16,alignItems:"center",justifyContent:"space-between"}}> 
                  <View style={{ alignItems: 'center' }}>
-          <Text style={[styles.name,{color:colors.textPrimary}]}>Williams Adusei</Text>
-          <Text style={[styles.email,{color:colors.textPrimary}]}>williams@example.com</Text>
+          <Text style={[styles.name,{color:colors.textPrimary}]}>{username}</Text>
+          <Text style={[styles.email,{color:colors.textPrimary}]}>{email}</Text>
         </View>
 
         {/* QR Code */}
@@ -111,7 +113,7 @@ const Profile = () => {
 
         {/* Manage Account */}
         <TouchableOpacity
-          onPress={() => router.push('/')}
+          onPress={() => router.push("/(protected)/(otherScreens)/settings")}
           style={[styles.menuItem, { marginTop: 24 }]}
         >
           <View style={styles.menuItemContent}>
