@@ -113,15 +113,6 @@ GOOGLE_CLIENT_ID=...
 
 ---
 
-## 📘 Contributions
-
-Pull requests are welcome! To contribute:
-
-1. Fork the repository
-2. Create a feature branch
-3. Submit a PR with detailed description
-
----
 
 ## 🛠️ Scripts
 
